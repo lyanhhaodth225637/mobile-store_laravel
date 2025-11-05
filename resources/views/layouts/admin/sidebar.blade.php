@@ -27,72 +27,23 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('admin/loaisanpham*') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loaisanpham" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <!-- <i class="fas fa-fw fa-cog"></i> -->
+            aria-controls="loaisanpham">
             <span>Loại Sản Phẩm</span>
         </a>
-        <div id="loaisanpham" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+
+        <div id="loaisanpham" class="collapse {{ Request::is('admin/loaisanpham*') ? 'show' : '' }}"
+            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{{ route('loaisanpham') }}">Loại Sản Phẩm</a>
-                <a class="collapse-item" href="{{ route('loaisanpham.them') }}">Thêm</a>
-            </div>
-        </div>
-    </li>
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hangsanxuat" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <!-- <i class="fas fa-fw fa-cog"></i> -->
-            <span>Loại Sản Phẩm</span>
-        </a>
-        <div id="hangsanxuat" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{{ route('loaisanpham') }}">Loại Sản Phẩm</a>
-                <a class="collapse-item" href="cards.html">cc</a>
-            </div>
-        </div>
-    </li>
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sanpham" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <!-- <i class="fas fa-fw fa-cog"></i> -->
-            <span>Loại Sản Phẩm</span>
-        </a>
-        <div id="sanpham" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{{ route('loaisanpham') }}">Loại Sản Phẩm</a>
-                <a class="collapse-item" href="">Thêm</a>
-            </div>
-        </div>
-    </li>
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#nguoidung" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <!-- <i class="fas fa-fw fa-cog"></i> -->
-            <span>Loại Sản Phẩm</span>
-        </a>
-        <div id="nguoidung" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                <a class="collapse-item" href="{{ route('loaisanpham') }}">Loại Sản Phẩm</a>
-                <a class="collapse-item" href="cards.html">cc</a>
+                <a class="collapse-item {{ Request::routeIs('loaisanpham') ? 'active' : '' }}"
+                    href="{{ route('admin.loaisanpham') }}">Danh sách</a>
+                <a  class="collapse-item"
+                    href="{{ route('admin.loaisanpham.them') }}">Thêm</a>
             </div>
         </div>
     </li>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+    
 
 </ul>

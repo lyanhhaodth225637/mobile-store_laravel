@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>SB Admin 2 - Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/sbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -20,7 +20,10 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('/sbadmin2/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <!-- DataTables CSS -->
     <link href="{{ asset('/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/font-awesome/css/all.min.css') }}" rel="stylesheet">
+
 
 </head>
 
@@ -29,9 +32,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         @include ('layouts.admin.sidebar')
-        <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -39,9 +40,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <!-- navbar -->
                 @include ('layouts.admin.navbar')
-                <!-- End of navbar -->
 
                 <!-- Begin Page Content -->
                 @yield('content')
@@ -95,10 +94,14 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('/sbadmin2/js/sb-admin-2.min.js') }}"></script>
 
-
+    <!-- Page level plugins -->
+    <script src="{{ asset('/sbadmin2/vendor/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('/sbadmin2/vendor/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('/sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('/sbadmin2/js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('/sbadmin2/js/demo/chart-pie-demo.js') }}"></script>
     <script src="{{ asset('/sbadmin2/js/demo/datatables-demo.js') }}"></script>
 
 </body>

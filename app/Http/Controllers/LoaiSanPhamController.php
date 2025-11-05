@@ -21,12 +21,18 @@ class LoaiSanPhamController extends Controller
 
     public function postThem(Request $request)
     {
+        //luật
+        $request->validate([
+            'tenloai' => ['required', 'string', 'max:255', 'unique:loaisanpham,tenloai'],
+        ]);
+
         $orm = new LoaiSanPham();
         $orm->tenloai = $request->tenloai;
         $orm->tenloai_slug = Str::slug($request->tenloai, '-');
         $orm->save();
 
-        return redirect()->route('loaisanpham');
+        return redirect()->route('admin.loaisanpham')->with('success', 'Thêm loại sản phẩm thành công!');
+
     }
 
     public function getSua($id)
@@ -37,6 +43,11 @@ class LoaiSanPhamController extends Controller
 
     public function postSua(Request $request, $id)
     {
+        //kiểm tra
+        $request = validate([
+            'tenloai' => ['required', 'string', 'max:255', 'unique:loaisanpham,tenloai' . $id],
+        ]);
+
         $orm = LoaiSanPham::find($id);
         $orm->tenloai = $request->tenloai;
         $orm->tenloai_slug = Str::slug($request->tenloai, '-');

@@ -11,15 +11,18 @@
             </div>
             <div class="card-body">
 
-                <form action="{{ route('loaisanpham.them') }}" method="POST">
+                <form action="{{ route('admin.loaisanpham.them') }}" method="POST">
 
                     @csrf
 
                     <div class="form-group">
                         <label for="tenloai">Tên loại sản phẩm</label>
 
-                        <input type="text" class="form-control" id="tenloai" name="tenloai"
-                            placeholder="Nhập tên loại (ví dụ: Điện thoại)">
+                        <input type="text" class="form-control @error('tenloai') is-invalid @enderror" id="tenloai" name="tenloai"
+                            placeholder="Nhập tên loại (ví dụ: Điện thoại)" required>
+                            @error('tenloai')
+                            <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                            @enderror
                     </div>
 
                     {{-- (Bạn có thể thêm các ô input khác ở đây) --}}
