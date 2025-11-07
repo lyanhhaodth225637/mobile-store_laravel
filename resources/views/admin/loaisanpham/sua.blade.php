@@ -2,15 +2,12 @@
 <div class="modal fade" id="modalSua{{ $lsp->id }}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-sm-down">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Sửa Loại Sản Phẩm</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
-            </div>
+            
 
             <div class="modal-body">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thông tin loại sản phẩm</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Cập nhật loại sản phẩm</h6>
                     </div>
 
                     <div class="card-body">

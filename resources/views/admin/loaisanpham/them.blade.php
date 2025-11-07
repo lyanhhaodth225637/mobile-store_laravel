@@ -9,10 +9,6 @@
 
             <div class="modal-body">
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thông tin loại sản phẩm</h6>
-                    </div>
-
                     <div class="card-body">
                         <form action="{{ route('admin.loaisanpham.them') }}" method="POST">
                             @csrf

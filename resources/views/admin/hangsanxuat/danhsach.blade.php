@@ -10,17 +10,15 @@
             <div class="card-header py-3 d-flex justify-content-between">
                 <!-- <h2 class="m-0 font-weight-bold text-primary">Danh Sách</h2> -->
                 <div>
-                    <a class="btn bg-gradient-info text-gray-100 "
-                        href=""><i class="fa-regular fa-plus"></i> Import</a>
-                    <a class="btn bg-gradient-success text-gray-100 "
-                        href=""><i class="fa-regular fa-plus"></i> Export</a>
+                    <a class="btn bg-gradient-info text-gray-100 " href=""><i class="fa-regular fa-plus"></i> Import</a>
+                    <a class="btn bg-gradient-success text-gray-100 " href=""><i class="fa-regular fa-plus"></i> Export</a>
                 </div>
                 <a class="btn bg-gradient-primary text-gray-100" href="#" data-bs-toggle="modal"
                     data-bs-target="#modalThem">
                     <i class="fa-regular fa-plus"></i> Thêm
                 </a>
             </div>
-           
+
 
             <!-- thông báo thành công -->
             @if (session('success'))
@@ -48,9 +46,9 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Hình ảnh</th>
                                 <th>Tên hãng</th>
                                 <th>Tên hãng không dấu</th>
-                                <th>Hình ảnh</th>
                                 <th>Sửa</th>
                                 <th>Xóa</th>
                             </tr>
@@ -60,16 +58,17 @@
                             @foreach ($hangsanxuat as $hsx)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td class="text-center"><img src="{{ asset('storage/' . $hsx->hinhanh) }}" width="100"
+                                            class="img-thumbnail" /></td>
                                     <td>{{ $hsx->tenhang }}</td>
                                     <td>{{ $hsx->tenhang_slug }}</td>
-                                    <td>{{ $hsx->hinhanh }}</td>
 
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalSua{{ $hsx->id }}"><i class="fa-light fa-edit"></i></a>
                                     </td>
 
                                     <td class="text-center"><a href="{{ route('admin.hangsanxuat.xoa', ['id' => $hsx->id]) }}"
-                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $hsx->tenloai }} không?')"><i
+                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $hsx->tenhang }} không?')"><i
                                                 class="fa-light fa-trash-alt text-danger"></i></a>
                                     </td>
                                 </tr>

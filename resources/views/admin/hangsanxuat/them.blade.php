@@ -3,26 +3,33 @@
     <div class="modal-dialog modal-fullscreen-sm-down">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Thêm Loại Sản Phẩm</h5>
+                <h5 class="modal-title" id="modalLabel">Thêm Hãng Sản Xuất</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
 
             <div class="modal-body">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thông tin loại sản phẩm</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Thông tin hãng sản xuất</h6>
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('admin.loaisanpham.them') }}" method="POST">
+                        <form action="{{ route('admin.hangsanxuat.them') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
-                                <label for="tenloai">Tên loại sản phẩm</label>
-                                <input type="text" class="form-control @error('tenloai') is-invalid @enderror"
-                                    id="tenloai" name="tenloai" placeholder="Nhập tên loại (ví dụ: Điện thoại)"
-                                    required autofocus>
-                                @error('tenloai')
+                                <label for="tenhang">Tên hãng sản xuất</label>
+                                <input type="text" class="form-control @error('tenhang') is-invalid @enderror"
+                                    id="tenhang" name="tenhang" placeholder="Nhập tên hãng (ví dụ: Samsung)" required
+                                    autofocus>
+                                @error('tenhang')
+                                    <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
+                                @enderror
+
+                                <label for="hinhanh" class="mt-3">Hình ảnh</label>
+                                <input type="file" class="form-control @error('hinhanh') is-invalid @enderror"
+                                    id="hinhanh" name="hinhanh" required autofocus>
+                                @error('hinhanh')
                                     <div class="invalid-feedback"><strong>{{ $message }}</strong></div>
                                 @enderror
                             </div>
