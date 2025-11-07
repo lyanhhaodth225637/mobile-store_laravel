@@ -10,8 +10,9 @@
             <div class="card-header py-3 d-flex justify-content-between">
                 <!-- <h2 class="m-0 font-weight-bold text-primary">Danh Sách</h2> -->
                 <div>
-                    <a class="btn bg-gradient-info text-gray-100 " href=""><i class="fa-regular fa-plus"></i> Import</a>
-                    <a class="btn bg-gradient-success text-gray-100 " href=""><i class="fa-regular fa-plus"></i> Export</a>
+                    <a class="btn bg-gradient-info text-gray-100 " href="#" data-bs-toggle="modal"
+                        data-bs-target="#modalImport"><i class="fa-solid fa-upload"></i> Import</a>
+                    <a class="btn bg-gradient-success text-gray-100 " href=""><i class="fa-solid fa-download"></i> Export</a>
                 </div>
                 <a class="btn bg-gradient-primary text-gray-100" href="#" data-bs-toggle="modal"
                     data-bs-target="#modalThem">
@@ -85,6 +86,7 @@
     </div>
     <!-- cuối content: include modal partial -->
     @include('admin.hangsanxuat.them')
+    @include('admin.hangsanxuat.nhap')
 
 
 
@@ -93,7 +95,7 @@
 @section('js')
     <script>
         @if ($errors->any())
-            var modal = new bootstrap.Modal(document.getElementById('modal'));
+            var modal = new bootstrap.Modal(document.getElementById('modalThem'));
             modal.show();
         @endif
 

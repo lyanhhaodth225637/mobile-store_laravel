@@ -6,7 +6,11 @@ use App\Models\HangSanXuat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
+
+use App\Imports\HangSanXuatImport;
+use Maatwebsite\Excel\Facades\Excel;
 class HangSanXuatController extends Controller
 {
     public function getDanhSach()
@@ -54,15 +58,34 @@ class HangSanXuatController extends Controller
     public function postSua(Request $request, $id)
     {
         $request->validate([
-            'tenloai' => ['required', 'string', 'max:255', Rule::unique('loaisanpham', 'tenloai')->ignore($id)],
+            'tenhang' => ['required', 'string', 'max:255', Rule::unique('hangsanxuat', 'tenhang')->ignore($id)],
+            'hinhanh' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        $orm = LoaiSanPham::findOrFail($id);
-        $orm->tenloai = Str::title($request->tenloai);
-        $orm->tenloai_slug = Str::slug($orm->tenloai, '-');
+        // $request->validate([
+        //     'tenhang' => ['required', 'string', 'max:255', Rule::unique('loaisanpham', 'tenhang')->ignore($id)],
+        // ]);
+
+        //upload hình
+        $path = null;
+        if ($request->hasFile('hinhanh')) {
+            // Xóa file cũ
+            $orm = HangSanXuat::find($id);
+            if (!empty($orm->hinhanh))
+                Storage::delete($orm->hinhanh);
+
+            $extention = $request->file('hinhanh')->extension();
+            $filename = Str::slug($request->tenhang, '-') . '.' . $extention;
+            $path = Storage::disk('public')->putFileAs('hang-san-xuat', $request->file('hinhanh'), $filename);
+        }
+
+        $orm = HangSanXuat::findOrFail($id);
+        $orm->tenhang = Str::title($request->tenhang);
+        $orm->tenhang_slug = Str::slug($orm->tenhang, '-');
+        $orm->hinhanh = $path ?? $orm->hinhanh ?? null;
         $orm->save();
 
-        return redirect()->route('admin.loaisanpham')->with('success', 'Cập nhật loại sản phẩm thành công!');
+        return redirect()->route('admin.hangsanxuat')->with('success', 'Cập nhật hãng sản xuất thành công!');
     }
 
     public function getXoa($id)
@@ -74,5 +97,28 @@ class HangSanXuatController extends Controller
         }
         return redirect()->route('admin.hangsanxuat')->with('error', 'Lỗi khi xóa');
     }
+
+
+
+    public function postNhap(Request $request)
+    {
+        // ✅ Bước 1: Kiểm tra file hợp lệ
+        $request->validate([
+            'file_excel' => 'required|mimes:xlsx,xls,csv|max:5120', // Giới hạn 5MB
+        ], [
+            'file_excel.required' => 'Vui lòng chọn file Excel để nhập!',
+            'file_excel.mimes' => 'Chỉ chấp nhận file có định dạng .xlsx, .xls, .csv!',
+            'file_excel.max' => 'Kích thước file tối đa là 5MB!',
+        ]);
+
+        try {
+            Excel::import(new HangSanXuatImport, $request->file('file_excel'));
+            return redirect()->route('admin.hangsanxuat')->with('success', 'Nhập dữ liệu thành công!');
+        } catch (Exception $e) {
+            // Nếu file bị lỗi (ví dụ không đúng cấu trúc cột)
+            return redirect()->route('admin.hangsanxuat')->with('error', 'File Excel không hợp lệ hoặc bị lỗi!');
+        }
+    }
+
 
 }

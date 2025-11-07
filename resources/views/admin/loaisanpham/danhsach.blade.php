@@ -90,7 +90,7 @@
 @section('js')
     <script>
         @if ($errors->any())
-            var modal = new bootstrap.Modal(document.getElementById('modal'));
+            var modal = new bootstrap.Modal(document.getElementById('modalThem'));
             modal.show();
         @endif
 

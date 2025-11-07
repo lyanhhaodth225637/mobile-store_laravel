@@ -12,26 +12,21 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('loaisanpham_id');
             $table->foreignId('hangsanxuat_id');
-            $table->string('tensanpham');
-            $table->string('tensanpham_slug');
-            $table->decimal(column: 'gia');
-
-            //khuyenmai theo %
-            $table->decimal('khuyenmai')->default(0);
-
-            //nếu khuyenmai = 0 trangthai_khuyenmai = 0, ngược lại = 1
-            $table->enum('trangthai_khuyenmai', [0, 1])->default(0);
-            $table->integer('soluong');
-            $table->date('ngayban')->nullable();
-            $table->text('mota')->nullable();
             $table->string('hinhanh')->nullable();
-            $table->json('ram')->nullable();
-
-            // 0: hết hàng, 1: còn hàng, 2: đặt trước
-            $table->enum('trangthai', [0, 1, 2])->default(0);
-
+            $table->string('tensanpham');
+            $table->string('tensanpham_slug')->unique();
+            $table->text('mota')->nullable();
+            $table->integer('soluong');
+            $table->decimal('gia', 15, 2);
+            $table->tinyInteger('khuyenmai')->default(0);
+            $table->decimal('gia_khuyenmai', 15, 2)->nullable();
+            $table->tinyInteger('trangthai')->default(0);//0 hết, 1 đang bán, 2 đặt trước
+            $table->integer('luotxem')->default(0);
+            $table->boolean('noibat')->default(false);
+            $table->boolean('dat_truoc')->default(false);
             $table->timestamps();
         });
+
     }
 
     public function down(): void

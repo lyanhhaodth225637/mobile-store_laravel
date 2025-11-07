@@ -28,12 +28,12 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loaisanpham" aria-expanded="true"
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#danhmuc" aria-expanded="true"
             aria-controls="loaisanpham">
-            <span>Quản Lý Sản Phẩm</span>
+            <span>Danh Mục</span>
         </a>
 
-        <div id="loaisanpham"
+        <div id="danhmuc"
             class="collapse {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'show' : '' }}"
             aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -46,6 +46,29 @@
             </div>
         </div>
     </li>
+    <!-- === -->
+    <li class="nav-item {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loaisanpham" aria-expanded="true"
+            aria-controls="loaisanpham">
+            <span>Sản Phẩm</span>
+        </a>
+
+        <div id="loaisanpham"
+            class="collapse {{ Request::routeIs(['admin.sanpham*', 'admin.hangsanxuat*']) ? 'show' : '' }}"
+            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <a class="collapse-item {{ Request::routeIs('admin.sanpham') ? 'active' : '' }}"
+                    href="{{ route('admin.sanpham') }}">Sản Phẩm</a>
+                <a class="collapse-item {{ Request::routeIs('admin.loaisanpham') ? 'active' : '' }}"
+                    href="{{ route('admin.loaisanpham') }}">Sản Phẩm Đặt Trước</a>
+                <a class="collapse-item {{ Request::routeIs('admin.hangsanxuat') ? 'active' : '' }}"
+                    href="{{ route('admin.hangsanxuat') }}">Sản Phẩm Khuyến Mãi</a>
+
+            </div>
+        </div>
+    </li>
+
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
