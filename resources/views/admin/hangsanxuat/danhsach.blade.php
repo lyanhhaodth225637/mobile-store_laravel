@@ -4,15 +4,15 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Danh Sách Loại Sản Phẩm</h1>
+        <h1 class="h3 mb-2 text-gray-800">Hãng Sản Xuất</h1>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex justify-content-between">
                 <!-- <h2 class="m-0 font-weight-bold text-primary">Danh Sách</h2> -->
                 <div>
-                    <a class="btn bg-gradient-success text-gray-100 "
-                        href=""><i class="fa-regular fa-plus"></i> Import</a>
                     <a class="btn bg-gradient-info text-gray-100 "
+                        href=""><i class="fa-regular fa-plus"></i> Import</a>
+                    <a class="btn bg-gradient-success text-gray-100 "
                         href=""><i class="fa-regular fa-plus"></i> Export</a>
                 </div>
                 <a class="btn bg-gradient-primary text-gray-100" href="#" data-bs-toggle="modal"
@@ -20,6 +20,7 @@
                     <i class="fa-regular fa-plus"></i> Thêm
                 </a>
             </div>
+           
 
             <!-- thông báo thành công -->
             @if (session('success'))
@@ -47,30 +48,32 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Tên loại</th>
-                                <th>Tên loại không dấu</th>
+                                <th>Tên hãng</th>
+                                <th>Tên hãng không dấu</th>
+                                <th>Hình ảnh</th>
                                 <th>Sửa</th>
                                 <th>Xóa</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @foreach ($loaisanpham as $lsp)
+                            @foreach ($hangsanxuat as $hsx)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $lsp->tenloai }}</td>
-                                    <td>{{ $lsp->tenloai_slug }}</td>
+                                    <td>{{ $hsx->tenhang }}</td>
+                                    <td>{{ $hsx->tenhang_slug }}</td>
+                                    <td>{{ $hsx->hinhanh }}</td>
 
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
-                                            data-bs-target="#modalSua{{ $lsp->id }}"><i class="fa-light fa-edit"></i></a>
+                                            data-bs-target="#modalSua{{ $hsx->id }}"><i class="fa-light fa-edit"></i></a>
                                     </td>
 
-                                    <td class="text-center"><a href="{{ route('admin.loaisanpham.xoa', ['id' => $lsp->id]) }}"
-                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $lsp->tenloai }} không?')"><i
+                                    <td class="text-center"><a href="{{ route('admin.hangsanxuat.xoa', ['id' => $hsx->id]) }}"
+                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $hsx->tenloai }} không?')"><i
                                                 class="fa-light fa-trash-alt text-danger"></i></a>
                                     </td>
                                 </tr>
-                                @include('admin.loaisanpham.sua')
+                                @include('admin.hangsanxuat.sua')
 
                             @endforeach
 
@@ -82,7 +85,7 @@
 
     </div>
     <!-- cuối content: include modal partial -->
-    @include('admin.loaisanpham.them')
+    @include('admin.hangsanxuat.them')
 
 
 

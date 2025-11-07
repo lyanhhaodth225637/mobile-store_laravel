@@ -10,6 +10,8 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('/sbadmin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -103,6 +105,9 @@
     <script src="{{ asset('/sbadmin2/js/demo/chart-area-demo.js') }}"></script>
     <script src="{{ asset('/sbadmin2/js/demo/chart-pie-demo.js') }}"></script>
     <script src="{{ asset('/sbadmin2/js/demo/datatables-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @yield('js')
+
 
 </body>
 

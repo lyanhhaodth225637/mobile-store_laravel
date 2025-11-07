@@ -27,23 +27,23 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item {{ Request::is('admin/loaisanpham*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loaisanpham" aria-expanded="true"
             aria-controls="loaisanpham">
-            <span>Loại Sản Phẩm</span>
+            <span>Quản Lý Sản Phẩm</span>
         </a>
 
-        <div id="loaisanpham" class="collapse {{ Request::is('admin/loaisanpham*') ? 'show' : '' }}"
+        <div id="loaisanpham"
+            class="collapse {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'show' : '' }}"
             aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::routeIs('loaisanpham') ? 'active' : '' }}"
-                    href="{{ route('admin.loaisanpham') }}">Danh sách</a>
-                <a  class="collapse-item"
-                    href="{{ route('admin.loaisanpham.them') }}">Thêm</a>
+
+                <a class="collapse-item {{ Request::routeIs('admin.loaisanpham') ? 'active' : '' }}"
+                    href="{{ route('admin.loaisanpham') }}">Loại Sản Phẩm</a>
+                <a class="collapse-item {{ Request::routeIs('admin.hangsanxuat') ? 'active' : '' }}"
+                    href="{{ route('admin.hangsanxuat') }}">Hãng Sản Xuất</a>
+
             </div>
         </div>
     </li>
-
-    
-
 </ul>
