@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
-
 use App\Imports\HangSanXuatImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\HangSanXuatExport;
+
+
 class HangSanXuatController extends Controller
 {
     public function getDanhSach()
@@ -62,10 +63,7 @@ class HangSanXuatController extends Controller
             'hinhanh' => ['nullable', 'image', 'max:2048'],
         ]);
 
-        // $request->validate([
-        //     'tenhang' => ['required', 'string', 'max:255', Rule::unique('loaisanpham', 'tenhang')->ignore($id)],
-        // ]);
-
+       
         //upload hình
         $path = null;
         if ($request->hasFile('hinhanh')) {
@@ -118,6 +116,11 @@ class HangSanXuatController extends Controller
             // Nếu file bị lỗi (ví dụ không đúng cấu trúc cột)
             return redirect()->route('admin.hangsanxuat')->with('error', 'File Excel không hợp lệ hoặc bị lỗi!');
         }
+    }
+
+    public function getXuat()
+    {
+        return Excel::download(new HangSanXuatExport(), 'hang-san-xuat.xlsx');   
     }
 
 

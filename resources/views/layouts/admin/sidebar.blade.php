@@ -60,10 +60,12 @@
 
                 <a class="collapse-item {{ Request::routeIs('admin.sanpham') ? 'active' : '' }}"
                     href="{{ route('admin.sanpham') }}">Sản Phẩm</a>
-                <a class="collapse-item {{ Request::routeIs('admin.loaisanpham') ? 'active' : '' }}"
+                <a class="collapse-item {{ Request::routeIs('admin.sanpham.khuyenmai') ? 'active' : '' }}"
+                    href="{{ route('admin.sanpham.khuyenmai') }}">Sản Phẩm Khuyến Mãi</a>
+
+                <a hidden class="collapse-item {{ Request::routeIs('admin.loaisanpham') ? 'active' : '' }}"
                     href="{{ route('admin.loaisanpham') }}">Sản Phẩm Đặt Trước</a>
-                <a class="collapse-item {{ Request::routeIs('admin.hangsanxuat') ? 'active' : '' }}"
-                    href="{{ route('admin.hangsanxuat') }}">Sản Phẩm Khuyến Mãi</a>
+
 
             </div>
         </div>

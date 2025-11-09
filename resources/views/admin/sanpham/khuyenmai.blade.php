@@ -4,18 +4,18 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Sản Phẩm</h1>
+        <h1 class="h3 mb-2 text-gray-800">Sản Phẩm  Khuyến Mãi</h1>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Nút Import/Export -->
-                    <div class="d-flex gap-2">
-                        <a class="btn bg-gradient-info text-white" href="#" data-bs-toggle="modal"
+                    <div class="d-flex gap-2" >
+                        <a hidden class="btn bg-gradient-info text-white" href="#" data-bs-toggle="modal"
                             data-bs-target="#modalImport">
                             <i class="fa-solid fa-upload"></i> Import
                         </a>
-                        <a class="btn bg-gradient-success text-white" href="{{ route('admin.sanpham.xuat') }}">
+                        <a hidden class="btn bg-gradient-success text-white" href="">
                             <i class="fa-solid fa-download"></i> Export
                         </a>
                     </div>
@@ -98,7 +98,8 @@
                                 <th width="12%">Loại sản phẩm</th>
                                 <th width="8%">Hãng</th>
                                 <th width="10%">Số lượng</th>
-                                <th width="10%">Giá</th>
+                                <th>KM(%)</th>
+                                <th width="10%">Giá KM</th>
 
                                 {{-- ✅ Cột mới --}}
                                 <th width="10%">Trạng thái</th>
@@ -120,7 +121,8 @@
                                     <td>{{ $sp->loaisanpham->tenloai }}</td>
                                     <td>{{ $sp->hangsanxuat->tenhang }}</td>
                                     <td>{{ $sp->soluong }}</td>
-                                    <td>{{ $sp->gia }}</td>
+                                    <td>{{ $sp->khuyenmai }}</td>
+                                    <td>{{ $sp->gia_khuyenmai }}</td>
                                     <td>@if($sp->trangthai == 0)
                                                 <span class="badge bg-danger">Dừng bán</span>
                                             @elseif($sp->trangthai == 1)
@@ -138,7 +140,6 @@
                                     </td>
                                 </tr>
                                 @include('admin.sanpham.chitiet')
-                                @include('admin.sanpham.sua')
                             @endforeach
 
                         </tbody>

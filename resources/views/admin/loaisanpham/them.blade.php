@@ -8,7 +8,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="card shadow mb-4">
+                <div class="mb-4">
                     <div class="card-body">
                         <form action="{{ route('admin.loaisanpham.them') }}" method="POST">
                             @csrf

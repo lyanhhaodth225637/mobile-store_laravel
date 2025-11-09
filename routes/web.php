@@ -41,7 +41,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/sanpham/sua/{id}', [SanPhamController::class, 'postSua'])->name('sanpham.sua');
     Route::get('/sanpham/xoa/{id}', [SanPhamController::class, 'getXoa'])->name('sanpham.xoa');
     Route::get('/sanpham/loc', [SanPhamController::class, 'getLoc'])->name('sanpham.loc');
-
+    Route::get('/sanpham/chitiet/{id}', [SanPhamController::class, 'getSanPham_ChiTiet'])->name('sanpham.chitiet');
+    Route::get('/sanpham/khuyenmai', [SanPhamController::class, 'getSanPham_KhuyenMai'])->name('sanpham.khuyenmai');
+    //nhập, xuất excel
     Route::post('/sanpham/nhap', [SanPhamController::class, 'postNhap'])->name('sanpham.nhap');
     Route::get('/sanpham/xuat', [SanPhamController::class, 'getXuat'])->name('sanpham.xuat');
 

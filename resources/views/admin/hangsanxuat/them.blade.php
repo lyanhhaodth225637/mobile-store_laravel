@@ -2,16 +2,13 @@
 <div class="modal fade" id="modalThem" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-sm-down">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalLabel">Thêm Hãng Sản Xuất</h5>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="modalLabel">Thêm Hãng Sản Xuất</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
 
             <div class="modal-body">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Thông tin hãng sản xuất</h6>
-                    </div>
+                <div class=" mb-4">
 
                     <div class="card-body">
                         <form action="{{ route('admin.hangsanxuat.them') }}" method="POST" enctype="multipart/form-data">
