@@ -24,6 +24,8 @@
                     <div class="d-flex align-items-center gap-2">
                         <form action="{{ route('admin.sanpham.loc') }}" method="GET"
                             class="d-flex align-items-center gap-2 m-0">
+                            <input type="text" name="loai" value="danhsach" hidden>
+
                             <select name="hangsanxuat_id" class="form-select" style="width: 180px;">
                                 <option value="">Hãng sản xuất</option>
                                 @foreach ($hangsanxuat as $hsx)
@@ -100,7 +102,6 @@
                                 <th width="10%">Số lượng</th>
                                 <th width="10%">Giá</th>
 
-                                {{-- ✅ Cột mới --}}
                                 <th width="10%">Trạng thái</th>
 
                                 <th width="5%">Sửa</th>

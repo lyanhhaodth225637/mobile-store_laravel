@@ -113,7 +113,6 @@ class SanPhamController extends Controller
             'soluong' => ['required', 'integer', 'min:0'],
             'khuyenmai' => ['nullable', 'integer', 'min:0', 'max:100'],
             'mota' => ['nullable', 'string', 'max:255'],
-            'hinhanh' => ['nullable', 'image', 'max:2048'],
             'loaisanpham_id' => ['required', 'exists:loaisanpham,id'],
             'hangsanxuat_id' => ['required', 'exists:hangsanxuat,id'],
         ]);
@@ -168,7 +167,6 @@ class SanPhamController extends Controller
         // Lấy tất cả danh sách hãng, loại để hiển thị lại form
         $hangsanxuat = HangSanXuat::all();
         $loaisanpham = LoaiSanPham::all();
-
         // Bắt đầu query
         $query = SanPham::query();
 
@@ -194,11 +192,17 @@ class SanPhamController extends Controller
         }
 
         // Lấy kết quả
-        $sanpham = $query->get();
+        if ($request->loai == 'danhsach') {
+            $sanpham = $query->get();
+            return view('admin.sanpham.danhsach', compact('sanpham', 'hangsanxuat', 'loaisanpham'));
+        }
+        if ($request->loai == 'khuyenmai') {
+            $sanpham = $query->where('khuyenmai', '>', 0)->get();
+            return view('admin.sanpham.khuyenmai', compact('sanpham', 'hangsanxuat', 'loaisanpham'));
+        }
 
-        // Trả về view
-        return view('admin.sanpham.danhsach', compact('sanpham', 'hangsanxuat', 'loaisanpham'));
     }
+
 
     public function postNhap(Request $request)
     {

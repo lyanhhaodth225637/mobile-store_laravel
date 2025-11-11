@@ -160,13 +160,13 @@
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
+        <!-- <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
                 <img class="img-profile rounded-circle" src="{{ asset('/sbadmin2/img/undraw_profile.svg') }}">
             </a>
-            <!-- Dropdown - User Information -->
+             
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -186,7 +186,79 @@
                     Logout
                 </a>
             </div>
-        </li>
+        </li>-->
+
+        <ul class="navbar-nav ms-auto">
+            <!-- Authentication Links -->
+            @guest
+                @if (Route::has('login'))
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ route('login') }}">
+                            <i class="fas fa-sign-in-alt me-1"></i>
+                            <span class="d-none d-sm-inline">{{ __('Login') }}</span>
+                            <span class="d-inline d-sm-none">Login</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if (Route::has('register'))
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ route('register') }}">
+                            <i class="fas fa-user-plus me-1"></i>
+                            <span class="d-none d-sm-inline">{{ __('Register') }}</span>
+                            <span class="d-inline d-sm-none">Register</span>
+                        </a>
+                    </li>
+                @endif
+            @else
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="rounded-circle me-2" src="{{ asset('/sbadmin2/img/undraw_profile.svg') }}" alt="Profile"
+                            style="width: 32px; height: 32px; object-fit: cover;">
+                        <span class="d-none d-md-inline text-dark">
+                            {{ Auth::user()->name }}
+                        </span>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userDropdown"
+                        style="min-width: 200px;">
+
+                        <div class="dropdown-header d-md-none">
+                            <strong>{{ Auth::user()->name }}</strong>
+                        </div>
+
+                        <a class="dropdown-item py-2" href="#">
+                            <i class="fas fa-user fa-fw me-2 text-primary"></i>
+                            Profile
+                        </a>
+
+                        <a class="dropdown-item py-2" href="#">
+                            <i class="fas fa-cogs fa-fw me-2 text-primary"></i>
+                            Settings
+                        </a>
+
+                        <a class="dropdown-item py-2" href="#">
+                            <i class="fas fa-list fa-fw me-2 text-primary"></i>
+                            Activity Log
+                        </a>
+
+                        <div class="dropdown-divider my-1"></div>
+
+                        <a class="dropdown-item py-2 text-danger" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt fa-fw me-2"></i>
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            @endguest
+        </ul>
+
 
     </ul>
 
