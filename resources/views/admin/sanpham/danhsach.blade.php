@@ -55,9 +55,10 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa-solid fa-filter"></i>
                             </button>
-                            <a href="{{ route('admin.sanpham.loc') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.sanpham.loc', ['loai' => 'danhsach']) }}" class="btn btn-secondary">
                                 <i class="fa-solid fa-rotate-right"></i>
                             </a>
+
                         </form>
 
                         <a class="btn bg-gradient-primary text-white" href="#" data-bs-toggle="modal"

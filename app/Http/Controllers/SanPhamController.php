@@ -196,7 +196,7 @@ class SanPhamController extends Controller
             $sanpham = $query->get();
             return view('admin.sanpham.danhsach', compact('sanpham', 'hangsanxuat', 'loaisanpham'));
         }
-        if ($request->loai == 'khuyenmai') {
+        elseif ($request->loai == 'khuyenmai') {
             $sanpham = $query->where('khuyenmai', '>', 0)->get();
             return view('admin.sanpham.khuyenmai', compact('sanpham', 'hangsanxuat', 'loaisanpham'));
         }

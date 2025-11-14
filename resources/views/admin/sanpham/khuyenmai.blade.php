@@ -55,7 +55,7 @@
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa-solid fa-filter"></i>
                             </button>
-                            <a href="{{ route('admin.sanpham.loc') }}" class="btn btn-secondary">
+                            <a href="{{ route('admin.sanpham.loc', ['loai'=>'khuyenmai']) }}" class="btn btn-secondary">
                                 <i class="fa-solid fa-rotate-right"></i>
                             </a>
                         </form>
@@ -102,10 +102,7 @@
                                 <th width="10%">Số lượng</th>
                                 <th>KM(%)</th>
                                 <th width="10%">Giá KM</th>
-
-                                {{-- ✅ Cột mới --}}
                                 <th width="10%">Trạng thái</th>
-
                                 <th width="5%">Sửa</th>
                                 <th width="5%">Xóa</th>
                             </tr>
@@ -154,10 +151,6 @@
     <!-- cuối content: include modal partial -->
     @include('admin.sanpham.them')
     @include('admin.sanpham.nhap')
-
-
-
-
 @endsection
 
 @section('js')
