@@ -27,7 +27,7 @@ class SanPham extends Model
 
     public function HangSanXuat(): BelongsTo
     {
-        //1 hãng sản xuất có n sản phân (1-n)
+        //1 hãng sản xuất có n sản phẩm (1-n)
         return $this->belongsTo(HangSanXuat::class, 'hangsanxuat_id', 'id');
     }
 

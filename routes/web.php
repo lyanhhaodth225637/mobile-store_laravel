@@ -6,6 +6,7 @@ use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
 use App\Http\Controllers\QuanTriVienController;
 use App\Http\Controllers\KhachHangController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -57,6 +58,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     //nhập, xuất excel
     Route::post('/sanpham/nhap', [SanPhamController::class, 'postNhap'])->name('sanpham.nhap');
     Route::get('/sanpham/xuat', [SanPhamController::class, 'getXuat'])->name('sanpham.xuat');
+
+    Route::get('/user',[UserController::class, 'getDanhSach'])->name('user');
 
 });
 

@@ -57,16 +57,30 @@
             class="collapse {{ Request::routeIs(['admin.sanpham*', 'admin.hangsanxuat*']) ? 'show' : '' }}"
             aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-
-                <a class="collapse-item {{ Request::routeIs('admin.sanpham') ? 'active' : '' }}"
+                <a class="collapse-item {{ Request::routeIs('admin.sanpham', ['loai' => 'danhsach']) ? 'active' : '' }}"
                     href="{{ route('admin.sanpham') }}">Sản Phẩm</a>
-                <a class="collapse-item {{ Request::routeIs('admin.sanpham.khuyenmai') ? 'active' : '' }}"
+                <a class="collapse-item {{ Request::routeIs('admin.sanpham.khuyenmai', ['loai' => 'khuyenmai']) ? 'active' : '' }}"
                     href="{{ route('admin.sanpham.khuyenmai') }}">Sản Phẩm Khuyến Mãi</a>
-
                 <a hidden class="collapse-item {{ Request::routeIs('admin.loaisanpham') ? 'active' : '' }}"
                     href="{{ route('admin.loaisanpham') }}">Sản Phẩm Đặt Trước</a>
+            </div>
+        </div>
 
+    </li>
+    <!-- == -->
+    <li class="nav-item {{ Request::routeIs(['admin.user*',]) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#user" aria-expanded="true"
+            aria-controls="user">
+            <span>Ngườ Dùng</span>
+        </a>
+        <div id="user" class="collapse {{ Request::routeIs(['admin.user*',]) ? 'show' : '' }}"
+            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::routeIs('admin.user') ? 'active' : '' }}"
+                    href="{{ route('admin.user') }}">Người dùng</a>
 
+                <a class="collapse-item {{ Request::routeIs('admin.sanpham.khuyenmai', ['loai' => 'khuyenmai']) ? 'active' : '' }}"
+                    href="{{ route('admin.sanpham.khuyenmai') }}">Khách hàng mới</i></a>
             </div>
         </div>
     </li>
