@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\LoaiSanPham;
+use App\Models\SanPham;
+use Gloudemans\Shoppingcart\Facades\Cart;
 class HomeController extends Controller
 {
 
     public function getHome()
     {
-        // Bổ sung code tại đây
-        return view('frontend.home');
+        $loaisanpham = LoaiSanPham::with([
+            'SanPham' => function ($query) {
+                $query->latest()->take(8);
+            }
+        ])->get();
+        return view('frontend.home', compact('loaisanpham'));
     }
 
     public function getSanPham($tenloai_slug = '')
@@ -38,31 +44,61 @@ class HomeController extends Controller
     }
     public function getGioHang()
     {
-        // Bổ sung code tại đây
-        return view('frontend.giohang');
+        if (Cart::count() > 0) {
+            return view('frontend.giohang');
+        }
+        return view('frontend.giohangrong');
     }
 
-    public function getGioHang_Them($tensanpham_slug = '')
+    public function postGioHang_Them(Request $request)
     {
-        // Bổ sung code tại đây
-        return redirect()->route('frontend.home');
+        $sanpham = SanPham::where('tensanpham_slug', $request->tensanpham_slug)->firstOrFail();
+
+        $gia = $sanpham->khuyenmai > 0 ? $sanpham->gia_khuyenmai : $sanpham->gia;
+
+        Cart::add([
+            'id' => $sanpham->id,
+            'name' => $sanpham->tensanpham,
+            'qty' => 1,
+            'price' => $gia,
+            'weight' => 0,
+            'options' => [
+                'hinhanh' => $sanpham->hinhanh,
+                'gia' => $sanpham->gia,
+                'khuyenmai' => $sanpham->khuyenmai ?? 0,
+                'gia_khuyenmai' => $sanpham->gia_khuyenmai ?? $sanpham->gia,
+            ]
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'count' => Cart::count(),
+            'total' => Cart::total(),
+            'message' => 'Đã thêm "' . $sanpham->tensanpham . '" vào giỏ hàng!'
+        ]);
     }
 
     public function getGioHang_Xoa($row_id)
     {
-        // Bổ sung code tại đây
-        return redirect()->route('frontend.giohang');
+        Cart::remove($row_id);
+        return redirect()->back();
     }
 
     public function getGioHang_Giam($row_id)
     {
-        // Bổ sung code tại đây
+        $row = Cart::get($row_id);
+        if ($row->qty > 1) {
+            Cart::update($row_id, $row->qty - 1);
+        }
         return redirect()->route('frontend.giohang');
     }
 
     public function getGioHang_Tang($row_id)
     {
-        // Bổ sung code tại đây
+        $row = Cart::get($row_id);
+        if ($row->qty < 10) {
+            Cart::update($row_id, $row->qty + 1);
+        }
         return redirect()->route('frontend.giohang');
     }
 

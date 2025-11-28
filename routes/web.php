@@ -59,7 +59,18 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/sanpham/nhap', [SanPhamController::class, 'postNhap'])->name('sanpham.nhap');
     Route::get('/sanpham/xuat', [SanPhamController::class, 'getXuat'])->name('sanpham.xuat');
 
-    Route::get('/user',[UserController::class, 'getDanhSach'])->name('user');
+    //user
+    Route::get('/user', [UserController::class, 'getDanhSach'])->name('user');
+    Route::get('/user/them', [UserController::class, 'getThem'])->name('user.them');
+    Route::post('/user/them', [UserController::class, 'postThem'])->name('user.them');
+    Route::get('/user/sua/{id}', [UserController::class, 'getSua'])->name('user.sua');
+    Route::post('/user/sua/{id}', [UserController::class, 'postSua'])->name('user.sua');
+    Route::get('/user/xoa/{id}', [UserController::class, 'getXoa'])->name('user.xoa');
+    Route::get('/user/loc', [UserController::class, 'getLoc'])->name('user.loc');
+    Route::get('/user/khach-hang-moi', [UserController::class, 'getKhachHang_Moi'])->name('user.khachhang_moi');
+    Route::get('/user/khach-hang-than-thiet', [UserController::class, 'getKhachHang_ThanThiet'])->name('user.khachhang_thanthiet');
+    Route::get('/user/khach-hang-vip', [UserController::class, 'getKhachHang_VIP'])->name('user.khachhang_vip');
+
 
 });
 
@@ -98,7 +109,7 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
 
 // Các trang dành cho khách chưa đăng nhập
 Route::name('frontend.')->group(function () {
-    // Trang chủ
+    // Trang chủ    
     Route::get('/', [HomeController::class, 'getHome'])->name('home');
     //Biên soạn: Nguyễn Hoàng Tùng (nhtung.id.vn).
     Route::get('/home', [HomeController::class, 'getHome'])->name('home');
@@ -115,7 +126,7 @@ Route::name('frontend.')->group(function () {
 
     // Trang giỏ hàng
     Route::get('/gio-hang', [HomeController::class, 'getGioHang'])->name('giohang');
-    Route::get('/gio-hang/them/{tensanpham_slug}', [HomeController::class, 'getGioHang_Them'])->name('giohang.them');
+    Route::post('/gio-hang/them/', [HomeController::class, 'postGioHang_Them'])->name('giohang.them');
     Route::get('/gio-hang/xoa/{row_id}', [HomeController::class, 'getGioHang_Xoa'])->name('giohang.xoa');
     Route::get('/gio-hang/giam/{row_id}', [HomeController::class, 'getGioHang_Giam'])->name('giohang.giam');
     Route::get('/gio-hang/tang/{row_id}', [HomeController::class, 'getGioHang_Tang'])->name('giohang.tang');

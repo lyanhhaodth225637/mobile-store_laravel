@@ -20,7 +20,34 @@
                         </a>
                     </div>
 
-                    <!-- Form lọc và nút thêm -->
+                    <div>
+                        <!-- Form lọc và nút thêm -->
+                        <div class="d-flex align-items-center gap-2">
+                            <form action="{{ route('admin.user.loc') }}" method="GET"
+                            
+                                class="d-flex align-items-center gap-2 m-0">
+                                
+                                <select name="vaitro" class="form-select" style="width: 180px;">
+                                    <option value="">Vai trò</option>
+                                    <option value="0" {{ request('vaitro') == '0' ? 'selected' : '' }}>Quản trị</option>
+                                    <option value="1" {{ request('vaitro') == '1' ? 'selected' : '' }}>Nhân viên</option>
+                                    <option value="2" {{ request('vaitro') == '2' ? 'selected' : '' }}>Khách hàng</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa-solid fa-filter"></i>
+                                </button>
+                                <a href="{{ route('admin.user.loc') }}"
+                                    class="btn btn-secondary">  
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </a>
+                            </form>
+
+                            <a class="btn bg-gradient-primary text-white" href="#" data-bs-toggle="modal"
+                                data-bs-target="#modalThem">
+                                <i class="fa-regular fa-plus"></i> Thêm
+                            </a>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -52,11 +79,11 @@
                         <thead>
                             <tr>
                                 <th width="5%">#</th>
-                                <th width="10%">Avatar</th>
+                                <th width="10%">Ảnh đai diện</th>
                                 <th width="15%">Tên</th>
                                 <th width="12%">Email</th>
                                 <th width="8%">Vai trò</th>
-                                <th width="10%">Rank</th>
+                                <th width="10%">Điểm</th>
                                 <th width="5%">Sửa</th>
                                 <th width="5%">Xóa</th>
                             </tr>
@@ -67,39 +94,35 @@
                             @foreach ($user as $user)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td class="text-center"><img src="" width="100" class="img-thumbnail" /></td>
+                                    <td class="text-center">
+                                        <img src="{{ asset('storage/' . $user->hinhanh) }}" width="50" height="50"
+                                            class="rounded-circle border border-2 border-primary" style="object-fit: cover;"
+                                            alt="Avatar" />
+                                    </td>
                                     <td> <a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalChiTiet{{ $user->id }}">{{ $user->name }}</a></td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @if($user->role == 0)
-                                            <span class="badge bg-danger">Quản trị</span>
+                                            <span class="badge bg-danger p-1">Quản trị</span>
                                         @elseif($user->role == 1)
-                                            <span class="badge bg-success">Nhân viên</span>
+                                            <span class="badge bg-warning p-1">Nhân viên</span>
                                         @elseif($user->role == 2)
-                                            <span class="badge bg-warning">Khách hàng</span>
+                                            <span class="badge bg-success p-1">Khách hàng</span>
                                         @endif
                                     </td>
-                                    <td>
-                                        @if($user->points < 1)
-                                            <img width="50px" src="{{ asset('assets/img/dong.png') }}" alt="">Đồng
-                                        @elseif($user->points > 1 && $user->points < 1000)
-                                            <img width="50px" src="{{ asset('assets/img/kimcuong.png') }}" alt="">Kim cương
-                                        @elseif($user->points > 1000 && $user->points < 5000)
-                                            <img width="50px" src="{{ asset('assets/img/caothu.png') }}" alt="">Cao thủ
-
-                                        @endif
-
-                                    </td>
+                                    <td>{{ $user->points }}</td>
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalSua{{ $user->id }}"><i class="fa-light fa-edit"></i></a>
                                     </td>
 
-                                    <td class="text-center"><a href="{{ route('admin.sanpham.xoa', ['id' => $user->id]) }}"
+                                    <td class="text-center"><a href="{{ route('admin.user.xoa', ['id' => $user->id]) }}"
                                             onclick="return confirm('Bạn có muốn xóa Người {{ $user->name }} không?')"><i
                                                 class="fa-light fa-trash-alt text-danger"></i></a>
                                     </td>
                                 </tr>
+                                @include('admin.user.sua');
+                                @include('admin.user.chitiet');
 
                             @endforeach
 
@@ -111,6 +134,7 @@
 
     </div>
     <!-- cuối content: include modal partial -->
+    @include('admin.user.them');
 @endsection
 
 @section('js')
@@ -123,5 +147,19 @@
         setTimeout(() => {
             $('#success').alert('close');
         }, 3000);
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
     </script>
 @endsection

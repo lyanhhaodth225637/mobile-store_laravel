@@ -27,6 +27,7 @@ class SanPhamImxport implements ToModel, WithHeadingRow
                 ? $row['gia'] - ($row['gia'] * $row['khuyenmai'] / 100)
                 : null,
             'mota' => $row['mota'] ?? null,
+            'thongso' => $row['thongso'] ?? null,
             'hinhanh' => $row['hinhanh'] ?? null,
         ]);
     }

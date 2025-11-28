@@ -15,6 +15,7 @@ class SanPham extends Model
         'tensanpham',
         'tensanpham_slug',
         'mota',
+        'thongso',
         'soluong',
         'gia',
         'khuyenmai',

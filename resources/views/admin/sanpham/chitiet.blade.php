@@ -143,27 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-toggle-on text-info me-2"></i>Trạng thái:
-                                        </label>
-                                         <p class="ms-2" id="chitiet-trangthai">
-                                            @if($sp->trangthai == 0)
-                                                <span class="badge bg-danger">Hết Hàng</span>
-                                            @elseif($sp->trangthai == 1)
-                                                <span class="badge bg-success">Đang bán</span>
-                                            @elseif($sp->trangthai == 2)
-                                                <span class="badge bg-warning">Đặt trước</span>
-                                            @endif
-                                        </p>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div> -->
+
 
                         <!-- Mô tả -->
                         <div class=" mb-3">
@@ -177,6 +157,28 @@
                             
                         </div>
 
+                        <!-- Thông số kỹ thuật (thêm mới) -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-dark">
+                                <i class="fas fa-cogs text-primary me-2"></i>Thông số kỹ thuật:
+                            </label>
+                            @php
+                                $thongso = json_decode($sp->thongso, true) ?? [];
+                            @endphp
+                            @if (!empty($thongso))
+                                <ul class="list-group list-group-flush ms-2">
+                                    @foreach ($thongso as $key => $value)
+                                        <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-1">
+                                            <span class="fw-bold text-capitalize">{{ str_replace('_', ' ', $key) }}:</span>
+                                            <span class="ms-2">{{ $value }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="ms-2 text-muted" id="chitiet-thongso">Trống</p>
+                            @endif
+                        </div>
+
                         <!-- Ngày tạo & Ngày cập nhật -->
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -187,7 +189,7 @@
                                         </label>
                                     </div>
                                     <div class="col-7">
-                                        <p class="form-control-plaintext text-muted small" id="chitiet-created">---</p>
+                                        <p class="form-control-plaintext text-muted small" id="chitiet-created">{{ $sp->created_at ? $sp->created_at->format('d/m/Y H:i') : '---' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +201,7 @@
                                         </label>
                                     </div>
                                     <div class="col-7">
-                                        <p class="form-control-plaintext text-muted small" id="chitiet-updated">---</p>
+                                        <p class="form-control-plaintext text-muted small" id="chitiet-updated">{{ $sp->updated_at ? $sp->updated_at->format('d/m/Y H:i') : '---' }}</p>
                                     </div>
                                 </div>
                             </div>

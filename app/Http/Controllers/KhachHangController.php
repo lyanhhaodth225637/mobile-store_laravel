@@ -1,9 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\Models\DonHang;
+use App\Models\DonHang_ChiTiet;
+use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 class KhachHangController extends Controller
 {
     public function __construct()
@@ -13,18 +16,45 @@ class KhachHangController extends Controller
 
     public function getHome()
     {
-        return view('user.home');
+        // tranghoso
+        if (Auth::check()) {
+            $user = User::find(Auth::user()->id);
+            return view('user.home', compact('user'));
+        } else
+            return redirect()->route('user.dangnhap');
     }
 
     public function getDatHang()
     {
-        // Bổ sung code tại đây
-        return view('user.dathang');
+        //kiểm tra đăng nhập
+        if (Auth::check()) {
+            return view('user.dathang');
+        } else {
+            return view('user.dangnhap');
+        }
     }
 
     public function postDatHang(Request $request)
     {
-        // Bổ sung code tại đây
+        //kiểm tra đầu vào
+        $this->validate($request, [
+            'diachi'=>['require','string','max:255'],
+            'sodienthoai'=>['require','string','size:10']
+        ]);
+
+        //lưu vào hóa đơn
+        $dh = new DonHang();
+        $dh->user_id = Auth::user()->id;
+        $dh->tinhtrang = 1;//mặc định "chờ xác nhận"
+        $dh->diachi = $request->diachi;
+        $dh->sodienthoai = $request->sodienthoai;
+        $dh->save();
+
+        //lưu vào chi tiết
+        foreach(Cart::content() as $value){
+            $ctdh = new DonHang_ChiTiet();
+
+        }
         return redirect()->route('user.dathangthanhcong');
     }
 
@@ -46,20 +76,42 @@ class KhachHangController extends Controller
 
     public function getHoSo()
     {
-        // Bổ sung code tại đây
-        return view('user.hoso');
+        return redirect()->route('user.home');
     }
 
     public function postHoSo(Request $request)
     {
-        // Bổ sung code tại đây
-        return redirect()->route('user.home');
+        $id = Auth::user()->id;
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+        ]);
+
+        $orm = User::find($id);
+        $orm->name = $request->name;
+        $orm->username = Str::before($request->email, '@');
+        $orm->email = $request->email;
+        $orm->save();
+
+        return redirect()->route('user.home')->with('success', 'Đã cập nhật thông tin thành công.');
     }
 
     public function postDoiMatKhau(Request $request)
     {
-        // Bổ sung code tại đây
-        return redirect()->route('user.home');
+        $request->validate([
+            'old_password' => ['required', 'string', 'max:255'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ]);
+
+        $user = User::findOrFail(Auth::user()->id ?? 0);
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return redirect()->route('user.home')->with('success', 'Đổi mật khẩu thành công.');
+        } else
+            return redirect()->route('user.home')->with('warning', 'Mật khẩu cũ không chính xác.');
     }
 
     public function postDangXuat(Request $request)
@@ -67,5 +119,4 @@ class KhachHangController extends Controller
         // Bổ sung code tại đây
         return redirect()->route('frontend.home');
     }
-
 }

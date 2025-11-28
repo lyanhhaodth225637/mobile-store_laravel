@@ -11,13 +11,14 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('name_slug')->default('default.png');
             $table->string('email')->unique();
             $table->string('username')->nullable();
             $table->tinyInteger('role')->default(1);// mặc định là người dùng
             $table->integer('points')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('hinhanh')->nullable();
+            $table->string('hinhanh')->default('anh-dai-dien/default.png');
             $table->rememberToken();
             $table->timestamps();
         });

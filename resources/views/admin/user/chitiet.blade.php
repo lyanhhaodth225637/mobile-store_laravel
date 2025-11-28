@@ -1,10 +1,11 @@
-<!-- Modal Chi tiết Sản phẩm -->
-<div class="modal fade" id="modalChiTiet{{ $sp->id }}" tabindex="-1" aria-labelledby="modalChiTietLabel" aria-hidden="true">
+<!-- Modal Chi tiết Người dùng -->
+<div class="modal fade" id="modalChiTiet{{ $user->id }}" tabindex="-1" aria-labelledby="modalChiTietLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content border-0 shadow-lg">
             <div class="modal-header bg-info text-white">
                 <h5 class="modal-title fw-bold" id="modalChiTietLabel">
-                    <i class="fas fa-info-circle me-2"></i>Chi tiết Sản phẩm
+                    <i class="fas fa-user-circle me-2"></i>Chi tiết Người dùng
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Đóng"></button>
@@ -12,169 +13,91 @@
 
             <div class="modal-body bg-light p-4">
                 <div class="card border-0 shadow-sm">
-
-
                     <div class="card-body p-4">
 
-                        <!-- Hình ảnh sản phẩm -->
-                        <div class="text-center mb-4" id="product-image-container">
-                            <img src="{{ asset('storage/' . $sp->hinhanh) }}" alt="Hình ảnh sản phẩm"
-                                class="img-fluid rounded shadow" style="max-height: 300px; object-fit: cover;"
-                                id="chitiet-hinhanh">
+                        <!-- Avatar người dùng -->
+                        <div class="text-center mb-4" id="user-image-container">
+                            <img src="{{ asset('storage/' . $user->hinhanh) }}" alt="Avatar người dùng"
+                                class="img-fluid rounded-circle shadow"
+                                style="width: 150px; height: 150px; object-fit: cover;" id="chitiet-avatar">
                         </div>
 
                         <hr class="my-4">
 
-                        <!-- Tên sản phẩm -->
+                        <!-- Tên người dùng -->
                         <div class="row mb-3">
                             <div class="d-flex">
                                 <label class="form-label fw-bold text-dark">
-                                    <i class="fas fa-tag text-primary me-2"></i>Tên sản phẩm:
+                                    <i class="fas fa-user text-primary me-2"></i>Tên:
                                 </label>
-                                <p class="ms-2" id="chitiet-tensanpham">{{ $sp->tensanpham }}</p>
+                                <p class="ms-2" id="chitiet-name">{{ $user->name }}</p>
                             </div>
-
                         </div>
 
-                        <!-- Loại sản phẩm & Hãng sản xuất -->
+                        <!-- Username & Email -->
+                        <div class="row mb-3">
+                            <div class="col-md-6" hidden>
+                                <div class="d-flex">
+                                    <label class="form-label fw-bold text-dark">
+                                        <i class="fas fa-at text-primary me-2"></i>Username:
+                                    </label>
+                                    <p class="ms-2" id="chitiet-username">{{ $user->username ?? 'N/A' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex">
+                                    <label class="form-label fw-bold text-dark">
+                                        <i class="fas fa-envelope text-primary me-2"></i>Email:
+                                    </label>
+                                    <p class="ms-2" id="chitiet-email">{{ $user->email }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Role & Points -->
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class=" d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-list text-primary me-2"></i>Sản phẩm:
-                                        </label>
-                                        <p class="ms-2" id="chitiet-loaisanpham">{{ $sp->loaisanpham->tenloai }}</p>
-                                    </div>
-
-
-
+                                <div class="d-flex">
+                                    <label class="form-label fw-bold text-dark">
+                                        <i class="fas fa-shield-alt text-warning me-2"></i>Vai trò:
+                                    </label>
+                                    <p class="ms-2" id="chitiet-role">
+                                        @if($user->role == 0)
+                                            <span class="badge bg-danger p-1">Quản trị</span>
+                                        @elseif($user->role == 1)
+                                            <span class="badge bg-warning p-1">Nhân viên</span>
+                                        @elseif($user->role == 2)
+                                            <span class="badge bg-success p-1">Khách hàng</span>
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-industry text-primary me-2"></i>Hãng:
-                                        </label> 
-                                        <p class="ms-2" id="chitiet-hangsanxuat">
-                                            {{ $sp->hangsanxuat->tenhang }}</p>
-                                    </div>
-                                    
+                                <div class="d-flex">
+                                    <label class="form-label fw-bold text-dark">
+                                        <i class="fas fa-star text-success me-2"></i>Điểm:
+                                    </label>
+                                    <p class="ms-2" id="chitiet-points">{{ $user->points }}</p>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Giá & Khuyến mãi -->
+                        <!-- Email Verified Status -->
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-dollar-sign text-success me-2"></i>Giá:
-                                        </label>
-                                        <p class="ms-2" id="chitiet-gia">
-                                            {{ $sp->gia }} VNĐ</p>
-                                    </div>
-                                    
+                                <div class="d-flex">
+                                    <label class="form-label fw-bold text-dark">
+                                        <i class="fas fa-check-circle text-info me-2"></i>Email xác thực:
+                                    </label>
+                                    <p class="ms-2" id="chitiet-email-verified">
+                                        @if($user->email_verified_at)
+                                            <span class="badge bg-success">Đã xác thực</span>
+                                        @else
+                                            <span class="badge bg-danger">Chưa xác thực</span>
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-percent text-danger me-2"></i>Khuyến mãi:
-                                        </label>
-                                        <p class="ms-2" id="chitiet-khuyenmai">
-                                            {{ $sp->khuyenmai ?? 0 }}%
-                                        </p>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Giá sau khuyến mãi -->
-                        <div class="row mb-3" id="chitiet-giasaukm-container">
-                            <div class="d-flex">
-                                <label class="form-label fw-bold text-dark">
-                                    <i class="fas fa-tags text-warning me-2"></i>Giá sau KM:
-                                </label>
-                                 <p class="ms-2" id="chitiet-giasaukm">
-                                    <!-- {{ ($sp->gia)-($sp->gia * ($sp->khuyenmai/100)) }} VNĐ -->
-                                      {{ $sp->gia_khuyenmai }} VNĐ
-                                </p>
-                            </div>
-                            
-                             
-                        </div>
-
-                        <!-- Số lượng & Trạng thái -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-boxes text-warning me-2"></i>Số lượng:
-                                        </label>
-                                        <p class="ms-2" id="chitiet-soluong">
-                                            {{ $sp->soluong }}</p>
-                                    </div>
-                                
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-toggle-on text-info me-2"></i>Trạng thái:
-                                        </label>
-                                         <p class="ms-2" id="chitiet-trangthai">
-                                            @if($sp->trangthai == 0)
-                                                <span class="badge bg-danger">Hết Hàng</span>
-                                            @elseif($sp->trangthai == 1)
-                                                <span class="badge bg-success">Đang bán</span>
-                                            @elseif($sp->trangthai == 2)
-                                                <span class="badge bg-warning">Đặt trước</span>
-                                            @endif
-                                        </p>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="d-flex">
-                                        <label class="form-label fw-bold text-dark">
-                                            <i class="fas fa-toggle-on text-info me-2"></i>Trạng thái:
-                                        </label>
-                                         <p class="ms-2" id="chitiet-trangthai">
-                                            @if($sp->trangthai == 0)
-                                                <span class="badge bg-danger">Hết Hàng</span>
-                                            @elseif($sp->trangthai == 1)
-                                                <span class="badge bg-success">Đang bán</span>
-                                            @elseif($sp->trangthai == 2)
-                                                <span class="badge bg-warning">Đặt trước</span>
-                                            @endif
-                                        </p>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- Mô tả -->
-                        <div class=" mb-3">
-                            <div class="">
-                                <label class="form-label fw-bold text-dark">
-                                    <i class="fas fa-align-left text-secondary me-2"></i>Mô tả:
-                                </label>
-                                 <p class="ms-2" id="chitiet-mota"
-                                    style="white-space: pre-wrap;">{{ $sp->mota ?? 'Trống' }}</p>
-                            </div>
-                            
                         </div>
 
                         <!-- Ngày tạo & Ngày cập nhật -->
@@ -187,7 +110,9 @@
                                         </label>
                                     </div>
                                     <div class="col-7">
-                                        <p class="form-control-plaintext text-muted small" id="chitiet-created">---</p>
+                                        <p class="form-control-plaintext text-muted small" id="chitiet-created">
+                                            {{ $user->created_at ? $user->created_at->format('d/m/Y H:i') : '---' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +124,9 @@
                                         </label>
                                     </div>
                                     <div class="col-7">
-                                        <p class="form-control-plaintext text-muted small" id="chitiet-updated">---</p>
+                                        <p class="form-control-plaintext text-muted small" id="chitiet-updated">
+                                            {{ $user->updated_at ? $user->updated_at->format('d/m/Y H:i') : '---' }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

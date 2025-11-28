@@ -10,15 +10,16 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class SanPhamExport implements FromCollection, WithHeadings, WithCustomStartCell, WithMapping
 {
-    
+
     public function collection()
     {
         return SanPham::all();
     }
 
-    public function headings():array{
+    public function headings(): array
+    {
         return [
-            
+
             'loaisanpham_id',
             'hangsanxuat_id',
             'tensanpham',
@@ -28,17 +29,20 @@ class SanPhamExport implements FromCollection, WithHeadings, WithCustomStartCell
             'khuyenmai',
             'gia_khuyenmai',
             'mota',
+            'thongso',
             'hinhanh',
         ];
     }
-    
-    public function startCell(): string{
+
+    public function startCell(): string
+    {
         return 'A1';
     }
-    
-    public function map($row): array{
+
+    public function map($row): array
+    {
         return [
-            $row->loaisanpham_id,   
+            $row->loaisanpham_id,
             $row->hangsanxuat_id,
             $row->tensanpham,
             $row->tensanpham_slug,
@@ -47,6 +51,7 @@ class SanPhamExport implements FromCollection, WithHeadings, WithCustomStartCell
             $row->khuyenmai,
             $row->gia_khuyenmai,
             $row->mota,
+            $row->thongso,
             $row->hinhanh,
         ];
     }

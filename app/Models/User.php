@@ -34,4 +34,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function DonHang(): HasMany
+    {
+        return $this->hasMany(DonHang::class, 'user_id', 'id');
+    }
 }
