@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\HangSanXuatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
 use App\Http\Controllers\QuanTriVienController;
 use App\Http\Controllers\KhachHangController;
+use App\Http\Controllers\TinhTrangController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +47,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::post('/hangsanxuat/nhap', [HangSanXuatController::class, 'postNhap'])->name('hangsanxuat.nhap');
     Route::get('/hangsanxuat/xuat', [HangSanXuatController::class, 'getXuat'])->name('hangsanxuat.xuat');
 
+    //tình trạng
+    Route::get('/tinhtrang', [TinhTrangController::class, 'getDanhSach'])->name('tinhtrang');
+
     //sản phẩm
     Route::get('/sanpham', [SanPhamController::class, 'getDanhSach'])->name('sanpham');
     Route::get('/sanpham/them', [SanPhamController::class, 'getThem'])->name('sanpham.them');
@@ -70,6 +75,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/user/khach-hang-moi', [UserController::class, 'getKhachHang_Moi'])->name('user.khachhang_moi');
     Route::get('/user/khach-hang-than-thiet', [UserController::class, 'getKhachHang_ThanThiet'])->name('user.khachhang_thanthiet');
     Route::get('/user/khach-hang-vip', [UserController::class, 'getKhachHang_VIP'])->name('user.khachhang_vip');
+
+    //đơn hàng
+    Route::get('/donhang', [DonHangController::class, 'getDanhSanh'])->name('donhang');
+    Route::get('/donhang/chitiet/{id}', [DonHangController::class, 'getDonHang_ChiTiet'])->name('donhang.chitiet');
+
 
 
 });
@@ -104,10 +114,11 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
 
     // Đăng xuất
     Route::post('/dang-xuat', [KhachHangController::class, 'postDangXuat'])->name('dangxuat');
+    Route::post('/upload-avatar', [KhachHangController::class, 'uploadAvatar'])->name('upload.avatar');
 });
 
 
-// Các trang dành cho khách chưa đăng nhập
+// Các trang dành cho khách chưa đăng  
 Route::name('frontend.')->group(function () {
     // Trang chủ    
     Route::get('/', [HomeController::class, 'getHome'])->name('home');

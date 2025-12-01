@@ -88,108 +88,6 @@
                                             data-bs-custom-class="tooltip-sm" data-bs-title="Xóa khỏi giỏ"></button>
                                     </td>
                                 </tr>
-
-                                <!-- Item -->
-                                <tr>
-                                    <td class="py-3 ps-0">
-                                        <div class="d-flex align-items-center">
-                                            <a class="position-relative flex-shrink-0" href="#">
-                                                <img src="assets/img/shop/09.png" width="110" alt="iPad Pro" />
-                                            </a>
-                                            <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                                                <h5 class="d-flex animate-underline mb-2">
-                                                    <a class="d-block fs-sm fw-medium text-truncate animate-target"
-                                                        href="#">Tablet Apple iPad Pro M2</a>
-                                                </h5>
-                                                <ul class="list-unstyled gap-1 fs-xs mb-0">
-                                                    <li class="d-xl-none">
-                                                        <span class="text-body-secondary">Đơn giá:</span>
-                                                        <span class="text-dark-emphasis fw-medium">$989.00</span>
-                                                    </li>
-                                                </ul>
-                                                <div class="count-input rounded-2 d-md-none mt-3">
-                                                    <button type="button" class="btn btn-sm btn-icon" data-decrement>
-                                                        <i class="ci-minus"></i>
-                                                    </button>
-                                                    <input type="number" class="form-control form-control-sm" id="qty"
-                                                        name="qty" min="1" value="1" readonly />
-                                                    <button type="button" class="btn btn-sm btn-icon" data-increment>
-                                                        <i class="ci-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-xl-table-cell">$989.00</td>
-                                    <td class="py-3 d-none d-md-table-cell">
-                                        <div class="count-input">
-                                            <button type="button" class="btn btn-icon" data-decrement>
-                                                <i class="ci-minus"></i>
-                                            </button>
-                                            <input type="number" class="form-control" id="qty" name="qty" min="1" value="1"
-                                                readonly />
-                                            <button type="button" class="btn btn-icon" data-increment>
-                                                <i class="ci-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-md-table-cell">$989.00</td>
-                                    <td class="text-end py-3 px-0">
-                                        <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip"
-                                            data-bs-custom-class="tooltip-sm" data-bs-title="Xóa khỏi giỏ"></button>
-                                    </td>
-                                </tr>
-
-                                <!-- Item -->
-                                <tr>
-                                    <td class="py-3 ps-0">
-                                        <div class="d-flex align-items-center">
-                                            <a class="flex-shrink-0" href="#">
-                                                <img src="assets/img/shop/01.png" width="110" alt="Smart Watch" />
-                                            </a>
-                                            <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                                                <h5 class="d-flex animate-underline mb-2">
-                                                    <a class="d-block fs-sm fw-medium text-truncate animate-target"
-                                                        href="#">Smart Watch Series 7</a>
-                                                </h5>
-                                                <ul class="list-unstyled gap-1 fs-xs mb-0">
-                                                    <li class="d-xl-none">
-                                                        <span class="text-body-secondary">Đơn giá:</span>
-                                                        <span class="text-dark-emphasis fw-medium">$429.00</span>
-                                                    </li>
-                                                </ul>
-                                                <div class="count-input rounded-2 d-md-none mt-3">
-                                                    <button type="button" class="btn btn-sm btn-icon" data-decrement>
-                                                        <i class="ci-minus"></i>
-                                                    </button>
-                                                    <input type="number" class="form-control form-control-sm" id="qty"
-                                                        name="qty" min="1" value="1" readonly />
-                                                    <button type="button" class="btn btn-sm btn-icon" data-increment>
-                                                        <i class="ci-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-xl-table-cell">$429.00</td>
-                                    <td class="py-3 d-none d-md-table-cell">
-                                        <div class="count-input">
-                                            <button type="button" class="btn btn-icon" data-decrement>
-                                                <i class="ci-minus"></i>
-                                            </button>
-                                            <input type="number" class="form-control" id="qty" name="qty" min="1" value="1"
-                                                readonly />
-                                            <button type="button" class="btn btn-icon" data-increment>
-                                                <i class="ci-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-md-table-cell">$429.00</td>
-                                    <td class="text-end py-3 px-0">
-                                        <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip"
-                                            data-bs-custom-class="tooltip-sm" data-bs-title="Xóa khỏi giỏ"></button>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="nav position-relative z-2 mb-4 mb-lg-0">
@@ -230,7 +128,7 @@
                                         <span class="fs-sm">Tổng ước tính:</span>
                                         <span class="h5 mb-0">$2,390.40</span>
                                     </div>
-                                    <a class="btn btn-lg btn-primary w-100" href="#">
+                                    <a class="btn btn-lg btn-primary w-100" href="{{ route('user.dathang') }}">
                                         Tiến hành thanh toán
                                         <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
                                     </a>

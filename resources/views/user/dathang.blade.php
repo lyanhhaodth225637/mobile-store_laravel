@@ -1,12 +1,13 @@
 @extends('layouts.frontend.app')
-@section('title', 'Trang chủ')
+@section('title', 'Thanh toán đơn hàng')
+
 @section('content')
     <!-- Page content -->
     <main class="content-wrapper">
         <nav class="container pt-3 my-3">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="#">Sản phẩm</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('frontend.giohang') }}">Giỏ hàng</a></li>
                 <li class="breadcrumb-item active">Thanh toán đơn hàng</li>
             </ol>
         </nav>
@@ -19,24 +20,28 @@
                             style="width:2rem; height:2rem; margin-top:-.125rem">1</div>
                         <div class="w-100 ps-3 ps-md-4">
                             <h1 class="h5 mb-md-4">Thông tin giao hàng</h1>
-                            <form action="#" method="post" class="needs-validation" novalidate>
+
+                            <form action="{{ route('user.dathang') }}" method="post" class="needs-validation" novalidate>
+                                @csrf
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Họ và tên <span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control form-control-lg" id="name" name="name"
-                                        readonly />
+                                        value="{{ Auth::user()->name ?? '' }}" readonly />
                                 </div>
                                 <div class="mb-3">
-                                    <label for="phone" class="form-label">Điện thoại giao hàng <span
+                                    <label for="sodienthoai" class="form-label">Điện thoại giao hàng <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="phone" name="phone"
-                                        required />
+                                    <input type="text"
+                                        class="form-control form-control-lg @error('sodienthoai') is-invalid @enderror"
+                                        id="sodienthoai" name="sodienthoai" required />
                                 </div>
                                 <div class="mb-3">
-                                    <label for="address" class="form-label">Địa chỉ giao hàng <span
+                                    <label for="diachi" class="form-label">Địa chỉ giao hàng <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" class="form-control form-control-lg" id="address" name="address"
-                                        required />
+                                    <input type="text"
+                                        class="form-control form-control-lg @error('diachi') is-invalid @enderror"
+                                        id="diachi" name="diachi" required />
                                 </div>
                                 <input type="submit" id="checkout-form-submit" name="checkout-form-submit" hidden />
                             </form>
@@ -68,16 +73,16 @@
                                                 name="payment-method" value="creditcard" />
                                             Thẻ tín dụng hoặc thẻ ghi nợ
                                             <span class="d-none d-sm-flex gap-2 ms-3">
-                                                <img src="assets/img/payment-methods/amex.svg"
+                                                <img src="{{ asset('assets/img/payment-methods/amex.svg') }}"
                                                     class="d-block bg-info rounded-1" width="36" alt="Amex" />
-                                                <img src="assets/img/payment-methods/visa-light-mode.svg"
+                                                <img src="{{ asset('assets/img/payment-methods/visa-light-mode.svg') }}"
                                                     class="d-none-dark" width="36" alt="Visa" />
-                                                <img src="assets/img/payment-methods/visa-dark-mode.svg"
+                                                <img src="{{ asset('assets/img/payment-methods/visa-dark-mode.svg') }}"
                                                     class="d-none d-block-dark" width="36" alt="Visa" />
-                                                <img src="assets/img/payment-methods/mastercard.svg" width="36"
-                                                    alt="Mastercard" />
-                                                <img src="assets/img/payment-methods/maestro.svg" width="36"
-                                                    alt="Maestro" />
+                                                <img src="{{ asset('assets/img/payment-methods/mastercard.svg') }}"
+                                                    width="36" alt="Mastercard" />
+                                                <img src="{{ asset('assets/img/payment-methods/maestro.svg') }}"
+                                                    width="36" alt="Maestro" />
                                             </span>
                                         </label>
                                     </div>
@@ -90,8 +95,8 @@
                                             <input type="radio" class="form-check-input fs-base me-2 me-sm-3"
                                                 name="payment-method" value="paypal" />
                                             PayPal
-                                            <img src="assets/img/payment-methods/paypal-icon.svg" class="ms-3" width="16"
-                                                alt="PayPal" />
+                                            <img src="{{ asset('assets/img/payment-methods/paypal-icon.svg') }}"
+                                                class="ms-3" width="16" alt="PayPal" />
                                         </label>
                                     </div>
                                 </div>
@@ -103,8 +108,8 @@
                                             <input type="radio" class="form-check-input fs-base me-2 me-sm-3"
                                                 name="payment-method" value="googlepay" />
                                             Google Pay
-                                            <img src="assets/img/payment-methods/google-icon.svg" class="ms-3" width="20"
-                                                alt="Google Pay" />
+                                            <img src="{{ asset('assets/img/payment-methods/google-icon.svg') }}"
+                                                class="ms-3" width="20" alt="Google Pay" />
                                         </label>
                                     </div>
                                 </div>
@@ -122,7 +127,7 @@
 
                             <!-- Pay button visible on screens > 991px wide (lg breakpoint) -->
                             <label for="checkout-form-submit" class="btn btn-lg btn-primary w-100 d-none d-lg-flex">Thanh
-                                toán $2,406.90</label>
+                                toán {{ Cart::total() ?? 0 }}<small>đ</small></label>
                         </div>
                     </div>
                 </div>
@@ -137,40 +142,38 @@
                                     </div>
                                     <a class="d-flex align-items-center gap-2 text-decoration-none" href="#orderPreview"
                                         data-bs-toggle="offcanvas">
-                                        <div class="ratio ratio-1x1" style="max-width:64px">
-                                            <img src="assets/img/shop/08.png" class="d-block p-1" alt="iPhone" />
-                                        </div>
-                                        <div class="ratio ratio-1x1" style="max-width:64px">
-                                            <img src="assets/img/shop/09.png" class="d-block p-1" alt="iPad Pro" />
-                                        </div>
-                                        <div class="ratio ratio-1x1" style="max-width:64px">
-                                            <img src="assets/img/shop/01.png" class="d-block p-1" alt="Smart Watch" />
-                                        </div>
+                                        @foreach(Cart::content() as $value)
+                                            <div class="ratio ratio-1x1" style="max-width:64px">
+                                                <img src="{{ asset('storage/app/private/' . $value->options->image) }}"
+                                                    class="d-block p-1" alt="{{ $value->name }}" />
+                                            </div>
+                                        @endforeach
                                         <i class="ci-chevron-right text-body fs-xl p-0 ms-auto"></i>
                                     </a>
                                 </div>
                                 <ul class="list-unstyled fs-sm gap-3 mb-0">
                                     <li class="d-flex justify-content-between">
-                                        Tổng tiền (3 sản phẩm):
-                                        <span class="text-dark-emphasis fw-medium">$2,427.00</span>
+                                        Tổng tiền ({{ Cart::count() ?? 0 }} sản phẩm):
+                                        <span
+                                            class="text-dark-emphasis fw-medium">{{ Cart::priceTotal() }}<small>đ</small></span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         Giảm giá:
-                                        <span class="text-danger fw-medium">-$110.00</span>
+                                        <span class="text-danger fw-medium">{{ Cart::discount() }}<small>đ</small></span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         Thuế VAT:
-                                        <span class="text-dark-emphasis fw-medium">$73.40</span>
+                                        <span class="text-dark-emphasis fw-medium">{{ Cart::tax() }}<small>đ</small></span>
                                     </li>
                                     <li class="d-flex justify-content-between">
                                         Phí vận chuyển:
-                                        <span class="text-dark-emphasis fw-medium">$16.50</span>
+                                        <span class="text-dark-emphasis fw-medium">0<small>đ</small></span>
                                     </li>
                                 </ul>
                                 <div class="border-top pt-4 mt-4">
                                     <div class="d-flex justify-content-between mb-3">
                                         <span class="fs-sm">Tổng ước tính:</span>
-                                        <span class="h5 mb-0">$2,406.90</span>
+                                        <span class="h5 mb-0">{{ Cart::total() }}<small>đ</small></span>
                                     </div>
                                 </div>
                             </div>
@@ -188,59 +191,33 @@
             </div>
             <div class="offcanvas-body d-flex flex-column gap-3 py-2">
                 <!-- Item -->
-                <div class="d-flex align-items-center">
-                    <a class="flex-shrink-0" href="#">
-                        <img src="assets/img/shop/08.png" width="110" alt="iPhone 14" />
-                    </a>
-                    <div class="w-100 min-w-0 ps-2 ps-sm-3">
-                        <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="#">Apple iPhone 14 128GB
-                                White</a>
-                        </h5>
-                        <div class="h6 mb-0">$899.00</div>
-                        <div class="fs-xs pt-2">Số lượng: 1</div>
+                @foreach(Cart::content() as $value)
+                    <div class="d-flex align-items-center">
+                        <a class="flex-shrink-0" href="#">
+                            <img src="{{ asset('storage/app/private/' . $value->options->image) }}" width="110"
+                                alt="{{ $value->name }}" />
+                        </a>
+                        <div class="w-100 min-w-0 ps-2 ps-sm-3">
+                            <h5 class="d-flex animate-underline mb-2">
+                                <a class="d-block fs-sm fw-medium text-truncate animate-target" href="#">{{ $value->name }}</a>
+                            </h5>
+                            <div class="h6 mb-0">{{ number_format($value->price, 0, ',', '.') }}<small>đ</small></div>
+                            <div class="fs-xs pt-2">Số lượng: {{ $value->qty }}</div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Item -->
-                <div class="d-flex align-items-center">
-                    <a class="position-relative flex-shrink-0" href="#">
-                        <span class="badge text-bg-danger position-absolute top-0 start-0">-10%</span>
-                        <img src="assets/img/shop/09.png" width="110" alt="iPad Pro" />
-                    </a>
-                    <div class="w-100 min-w-0 ps-2 ps-sm-3">
-                        <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="#">Tablet Apple iPad Pro
-                                M2</a>
-                        </h5>
-                        <div class="h6 mb-0">$989.00 <del class="text-body-tertiary fs-xs fw-normal">$1,099.00</del></div>
-                        <div class="fs-xs pt-2">Số lượng: 1</div>
-                    </div>
-                </div>
-
-                <!-- Item -->
-                <div class="d-flex align-items-center">
-                    <a class="flex-shrink-0" href="#">
-                        <img src="assets/img/shop/01.png" width="110" alt="Smart Watch" />
-                    </a>
-                    <div class="w-100 min-w-0 ps-2 ps-sm-3">
-                        <h5 class="d-flex animate-underline mb-2">
-                            <a class="d-block fs-sm fw-medium text-truncate animate-target" href="#">Smart Watch Series 7,
-                                White</a>
-                        </h5>
-                        <div class="h6 mb-0">$429.00</div>
-                        <div class="fs-xs pt-2">Số lượng: 1</div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="offcanvas-header">
-                <a class="btn btn-lg btn-outline-secondary w-100" href="#">Chỉnh sửa giỏ hàng</a>
+                <a class="btn btn-lg btn-outline-secondary w-100" href="{{ route('frontend.giohang') }}">Chỉnh sửa giỏ
+                    hàng</a>
             </div>
         </div>
     </main>
-
+@endsection
+@section('floating-button')
     <!-- Fixed positioned pay button that is visible on screens < 992px wide (lg breakpoint) -->
     <div class="fixed-bottom z-sticky w-100 py-2 px-3 bg-body border-top shadow d-lg-none">
-        <label for="checkout-form-submit" class="btn btn-lg btn-primary w-100">Thanh toán $2,406.90</label>
+        <label for="checkout-form-submit" class="btn btn-lg btn-primary w-100">Thanh toán
+            {{ Cart::total() ?? 0 }}<small>đ</small></label>
     </div>
 @endsection

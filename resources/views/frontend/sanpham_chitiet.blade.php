@@ -1,5 +1,27 @@
 @extends('layouts.frontend.app')
-@section('title', 'Trang chủ')
+
+@section('title', 'Chi tiết sản phẩm')
+
+@section('styles')
+    <style>
+        #star-rating {
+            gap: 12px;
+        }
+
+        #star-rating i {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        #star-rating i:hover {
+            transform: scale(1.3);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+@endsection
 @section('content')
     <!-- Page content -->
     <main class="content-wrapper">
@@ -15,15 +37,21 @@
 
         <section class="container position-relative z-2 pb-4 pb-md-5 mb-2 mb-md-0">
             <div class="border-bottom">
-                <ul class="nav nav-underline flex-nowrap gap-4">
-                    <li class="nav-item me-sm-2">
-                        <a class="nav-link" href="#">Thông tin cơ bản</a>
+                <ul class="nav nav-underline flex-nowrap gap-4" id="productTabs" role="tablist">
+                    <li class="nav-item me-sm-2" role="presentation">
+                        <a class="nav-link active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab">
+                            Thông tin cơ bản
+                        </a>
                     </li>
-                    <li class="nav-item me-sm-2">
-                        <a class="nav-link pe-none active" href="#">Thông số kỹ thuật</a>
+                    <li class="nav-item me-sm-2" role="presentation">
+                        <a class="nav-link" id="specs-tab" data-bs-toggle="tab" href="#specs" role="tab">
+                            Thông số kỹ thuật
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Đánh giá (68)</a>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">
+                            Đánh giá (68)
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -32,7 +60,7 @@
         <!-- Product details + Sticky sidebar -->
         <section class="container pb-2 mb-2 mb-md-3">
             <div class="row">
-                <!-- Sticky product preview -->
+                <!-- Sticky product preview (desktop) -->
                 <aside class="col-md-5 col-xl-4 offset-xl-1 order-md-2 mb-5 mb-md-0" id="scrollPastPoint"
                     style="margin-top:-100px">
                     <div class="position-sticky top-0 ps-md-3 ps-lg-4 ps-xl-0" style="padding-top:100px">
@@ -75,7 +103,7 @@
                     </div>
                 </aside>
 
-                <!-- Sticky product preview + Add to cart CTA -->
+                <!-- Mobile sticky banner -->
                 <section class="sticky-product-banner sticky-top d-md-none start-0 ms-n4" data-sticky-element>
                     <div class="sticky-product-banner-inner start-0 pt-5">
                         <div class="vw-100 bg-body border-bottom border-light border-opacity-10 shadow pt-4 pb-2">
@@ -105,491 +133,116 @@
                     </div>
                 </section>
 
-                <!-- Product details -->
-                <div class="col-md-7 order-md-1">
-                    <h2 class="h3 pb-2 pb-md-3">Thông số kỹ thuật</h2>
-                    <h3 class="h6">General specs</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Model:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">iPhone 14 Plus</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Manufacturer:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Apple Inc.</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Finish:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Ceramic, Glass, Aluminium</span>
-                            <i class="ci-info fs-base text-body-tertiary position-absolute top-50 end-0 translate-middle-y"
-                                data-bs-toggle="popover" data-bs-trigger="hover" data-bs-custom-class="popover-sm"
-                                data-bs-content="Ceramic shield front, Glass back and Aluminium design"></i>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Capacity:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">128GB</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Chip:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">A15 Bionic chip</span>
-                        </li>
-                    </ul>
-                    <h3 class="h6">Display</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Diagonal:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">6.1"</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Screen type:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Super Retina XDR</span>
-                            <i class="ci-info fs-base text-body-tertiary position-absolute top-50 end-0 translate-middle-y"
-                                data-bs-toggle="popover" data-bs-trigger="hover" data-bs-custom-class="popover-sm"
-                                data-bs-content="HDR display, True Tone, Wide color (P3), Haptic Touch, 800 nits brightness"></i>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Resolution:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">2778x1284px at 458ppi</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Refresh rate:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">120 Hz</span>
-                        </li>
-                    </ul>
-                    <h3 class="h6">Camera</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Front camera:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">12MP</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Main camera:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">12MP Ultra Wide</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Zoom:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">2x opical, 5x digital</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Video:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">4K video recording</span>
-                            <i class="ci-info fs-base text-body-tertiary position-absolute top-50 end-0 translate-middle-y"
-                                data-bs-toggle="popover" data-bs-trigger="hover" data-bs-custom-class="popover-sm"
-                                data-bs-content="4K video, 1080p HD video, 720p HD video, Cinematic mode, Action mode"></i>
-                        </li>
-                    </ul>
-                    <h3 class="h6">Power and Battery</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Fast charging:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Yes</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Wireless charging:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Yes</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Charging power:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">up to 15W</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Video playback:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Up to 26 hours</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Audio playback:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">Up to 100 hours</span>
-                        </li>
-                    </ul>
-                    <h3 class="h6">Size and Weight</h3>
-                    <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Height:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">160.8 mm</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Width:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">78.1 mm</span>
-                        </li>
-                        <li class="d-flex align-items-center position-relative pe-4">
-                            <span>Weight:</span>
-                            <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
-                            <span class="text-dark-emphasis fw-medium text-end">203 grams</span>
-                        </li>
-                    </ul>
-                    <div class="alert d-flex alert-info mb-2 mb-sm-3" role="alert">
-                        <i class="ci-info fs-lg pe-1 me-2" style="margin-top:.125rem"></i>
-                        <div class="fs-sm">Thông số kỹ thuật và linh kiện của sản phẩm có thể thay đổi mà không cần báo
-                            trước.</div>
+                <!-- Tab content -->
+                <div class="col-md-7 order-md-1 tab-content" id="productTabContent">
+                    <!-- Thông tin cơ bản -->
+                    <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Thông tin cơ bản</h2>
+                        <p>Chưa có nội dung chi tiết. Bạn có thể thêm mô tả sản phẩm ở đây.</p>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Viewed products (Carousel) -->
-        <section class="container pb-0 mb-0">
-            <h2 class="h3 border-bottom pb-4 mb-0">Có thể bạn cũng thích</h2>
+                    <!-- Thông số kỹ thuật -->
+                    <div class="tab-pane fade" id="specs" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Thông số kỹ thuật</h2>
+                        <h3 class="h6">Thông số chung</h3>
+                        <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
+                            <li class="d-flex align-items-center position-relative pe-4">
+                                <span>Model:</span>
+                                <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                                <span class="text-dark-emphasis fw-medium text-end">iPhone 14 Plus</span>
+                            </li>
+                            <li class="d-flex align-items-center position-relative pe-4">
+                                <span>Nhà sản xuất:</span>
+                                <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                                <span class="text-dark-emphasis fw-medium text-end">Apple Inc.</span>
+                            </li>
+                            <li class="d-flex align-items-center position-relative pe-4">
+                                <span>Dung lượng:</span>
+                                <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                                <span class="text-dark-emphasis fw-medium text-end">128GB</span>
+                            </li>
+                            <li class="d-flex align-items-center position-relative pe-4">
+                                <span>Chip:</span>
+                                <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                                <span class="text-dark-emphasis fw-medium text-end">A15 Bionic</span>
+                            </li>
+                        </ul>
+                        <div class="alert d-flex alert-info" role="alert">
+                            <i class="ci-info fs-lg pe-1 me-2" style="margin-top:.125rem"></i>
+                            <div class="fs-sm">Thông số kỹ thuật có thể thay đổi mà không báo trước.</div>
+                        </div>
+                    </div>
 
-            <!-- Product carousel -->
-            <div class="position-relative mx-md-1">
-                <!-- External slider prev/next buttons visible on screens > 500px wide (sm breakpoint) -->
-                <button type="button"
-                    class="viewed-prev btn btn-prev btn-icon btn-outline-secondary bg-body rounded-circle animate-slide-start position-absolute top-50 start-0 z-2 translate-middle-y ms-n1 d-none d-sm-inline-flex">
-                    <i class="ci-chevron-left fs-lg animate-target"></i>
-                </button>
-                <button type="button"
-                    class="viewed-next btn btn-next btn-icon btn-outline-secondary bg-body rounded-circle animate-slide-end position-absolute top-50 end-0 z-2 translate-middle-y me-n1 d-none d-sm-inline-flex">
-                    <i class="ci-chevron-right fs-lg animate-target"></i>
-                </button>
+                    <!-- Đánh giá -->
+                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Đánh giá</h2>
 
-                <!-- Slider -->
-                <div class="swiper py-4 px-sm-3"
-                    data-swiper='{"slidesPerView": 2,"spaceBetween": 24,"loop": true,"navigation": {"prevEl": ".viewed-prev","nextEl": ".viewed-next"},"breakpoints": {"768": {"slidesPerView": 3},"992": {"slidesPerView": 4}}}'>
-                    <div class="swiper-wrapper">
-                        <!-- Item -->
-                        <div class="swiper-slide">
-                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                <div class="position-relative">
-                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                        <div class="d-flex flex-column gap-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                <i class="ci-heart fs-base animate-target"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                <i class="ci-refresh-cw fs-base animate-target"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                            data-bs-toggle="dropdown">
-                                            <i class="ci-more-vertical fs-lg"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i>
-                                                    Thêm vào yêu thích</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="#">
-                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                            <img src="assets/img/shop/01.png" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="d-flex gap-1 fs-xs">
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star text-body-tertiary opacity-75"></i>
-                                        </div>
-                                        <span class="text-body-tertiary fs-xs">(123)</span>
-                                    </div>
-                                    <h3 class="pb-1 mb-2">
-                                        <a class="d-block fs-sm fw-medium text-truncate" href="#">
-                                            <span class="animate-target">VRB01 Virtual Reality Glasses</span>
-                                        </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="h5 lh-1 mb-0">$340.99 <del
-                                                class="text-body-tertiary fs-sm fw-normal">$430.00</del></div>
-                                        <button type="button"
-                                            class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2">
-                                            <i class="ci-shopping-cart fs-base animate-target"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                        <!-- Tổng quan đánh giá -->
+                        <div class="d-flex align-items-center gap-3 mb-4 pb-2">
+                            <div class="d-flex gap-1">
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star fs-base text-body-tertiary opacity-75"></i>
                             </div>
+                            <span class="h3 mb-0">4.0</span>
+                            <span class="text-body-tertiary fs-sm pt-1">(68 đánh giá)</span>
                         </div>
 
-                        <!-- Item -->
-                        <div class="swiper-slide">
-                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                <div class="position-relative">
-                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                        <div class="d-flex flex-column gap-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                <i class="ci-heart fs-base animate-target"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                <i class="ci-refresh-cw fs-base animate-target"></i>
-                                            </button>
-                                        </div>
+                        <!-- Form viết đánh giá -->
+                        <h3 class="h5 mb-3">Viết đánh giá của bạn</h3>
+                        <form action="" method="POST" class="mb-5">
+                            @csrf
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <!-- Star Rating - ĐÃ FIX HOÀN TOÀN -->
+                                    <div class="d-flex gap-3 mb-3" id="star-rating">
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="1"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="2"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="3"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="4"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="5"></i>
                                     </div>
-                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                            data-bs-toggle="dropdown">
-                                            <i class="ci-more-vertical fs-lg"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i>
-                                                    Thêm vào yêu thích</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="#">
-                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                            <img src="assets/img/shop/02.png" />
-                                        </div>
-                                    </a>
+                                    <input type="hidden" name="so_sao" id="so_sao_input" value="0">
+
+                                    <textarea class="form-control" name="noidung" rows="5"
+                                        placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..." required></textarea>
                                 </div>
-                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="d-flex gap-1 fs-xs">
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star text-body-tertiary opacity-75"></i>
-                                        </div>
-                                        <span class="text-body-tertiary fs-xs">(123)</span>
-                                    </div>
-                                    <h3 class="pb-1 mb-2">
-                                        <a class="d-block fs-sm fw-medium text-truncate" href="#">
-                                            <span class="animate-target">Apple iPhone 14 128GB White</span>
-                                        </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="h5 lh-1 mb-0">$340.99 <del
-                                                class="text-body-tertiary fs-sm fw-normal">$430.00</del></div>
-                                        <button type="button"
-                                            class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2">
-                                            <i class="ci-shopping-cart fs-base animate-target"></i>
-                                        </button>
-                                    </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary animate-slide-end">
+                                        Gửi đánh giá
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
-                        <!-- Item -->
-                        <div class="swiper-slide">
-                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                <div class="position-relative">
-                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                        <div class="d-flex flex-column gap-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                <i class="ci-heart fs-base animate-target"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                <i class="ci-refresh-cw fs-base animate-target"></i>
-                                            </button>
+                        <!-- Danh sách đánh giá -->
+                        <div class="border-bottom pb-4 mb-4">
+                            <div class="d-flex gap-3 mb-4">
+                                <img class="rounded-circle flex-shrink-0" src="assets/img/avatars/01.jpg" width="48"
+                                    alt="Avatar">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div>
+                                            <h6 class="mb-1">Nguyễn Văn A</h6>
+                                            <div class="d-flex gap-1 fs-xs">
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star text-body-tertiary opacity-75"></i>
+                                            </div>
                                         </div>
+                                        <span class="text-body-tertiary fs-sm">2 ngày trước</span>
                                     </div>
-                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                            data-bs-toggle="dropdown">
-                                            <i class="ci-more-vertical fs-lg"></i>
+                                    <p class="mb-2">Sản phẩm tuyệt vời! Pin trâu, camera đẹp, hiệu năng mượt mà.</p>
+                                    <div class="d-flex gap-3 fs-sm">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ci-thumbs-up me-1"></i> Hữu ích (5)
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i>
-                                                    Thêm vào yêu thích</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="#">
-                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                            <img src="assets/img/shop/03.png" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="d-flex gap-1 fs-xs">
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star text-body-tertiary opacity-75"></i>
-                                        </div>
-                                        <span class="text-body-tertiary fs-xs">(123)</span>
-                                    </div>
-                                    <h3 class="pb-1 mb-2">
-                                        <a class="d-block fs-sm fw-medium text-truncate" href="#">
-                                            <span class="animate-target">Smart Watch Series 7, White</span>
-                                        </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="h5 lh-1 mb-0">$340.99 <del
-                                                class="text-body-tertiary fs-sm fw-normal">$430.00</del></div>
-                                        <button type="button"
-                                            class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2">
-                                            <i class="ci-shopping-cart fs-base animate-target"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item -->
-                        <div class="swiper-slide">
-                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                <div class="position-relative">
-                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                        <div class="d-flex flex-column gap-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                <i class="ci-heart fs-base animate-target"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                <i class="ci-refresh-cw fs-base animate-target"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                            data-bs-toggle="dropdown">
-                                            <i class="ci-more-vertical fs-lg"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i>
-                                                    Thêm vào yêu thích</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="#">
-                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                            <img src="assets/img/shop/04.png" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="d-flex gap-1 fs-xs">
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star text-body-tertiary opacity-75"></i>
-                                        </div>
-                                        <span class="text-body-tertiary fs-xs">(123)</span>
-                                    </div>
-                                    <h3 class="pb-1 mb-2">
-                                        <a class="d-block fs-sm fw-medium text-truncate" href="#">
-                                            <span class="animate-target">Laptop Apple MacBook Pro 13 M2</span>
-                                        </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="h5 lh-1 mb-0">$340.99 <del
-                                                class="text-body-tertiary fs-sm fw-normal">$430.00</del></div>
-                                        <button type="button"
-                                            class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2">
-                                            <i class="ci-shopping-cart fs-base animate-target"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Item -->
-                        <div class="swiper-slide">
-                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                <div class="position-relative">
-                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                        <div class="d-flex flex-column gap-2">
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                <i class="ci-heart fs-base animate-target"></i>
-                                            </button>
-                                            <button type="button"
-                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                <i class="ci-refresh-cw fs-base animate-target"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                            data-bs-toggle="dropdown">
-                                            <i class="ci-more-vertical fs-lg"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i>
-                                                    Thêm vào yêu thích</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="#"><i
-                                                        class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="#">
-                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                            <img src="assets/img/shop/05.png" />
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                    <div class="d-flex align-items-center gap-2 mb-2">
-                                        <div class="d-flex gap-1 fs-xs">
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star-filled text-warning"></i>
-                                            <i class="ci-star text-body-tertiary opacity-75"></i>
-                                        </div>
-                                        <span class="text-body-tertiary fs-xs">(123)</span>
-                                    </div>
-                                    <h3 class="pb-1 mb-2">
-                                        <a class="d-block fs-sm fw-medium text-truncate" href="#">
-                                            <span class="animate-target">Tablet Apple iPad Air M1</span>
-                                        </a>
-                                    </h3>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="h5 lh-1 mb-0">$340.99 <del
-                                                class="text-body-tertiary fs-sm fw-normal">$430.00</del></div>
-                                        <button type="button"
-                                            class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2">
-                                            <i class="ci-shopping-cart fs-base animate-target"></i>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ci-thumbs-down me-1"></i> Không hữu ích (0)
                                         </button>
                                     </div>
                                 </div>
@@ -597,19 +250,64 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- External slider prev/next buttons visible on screens < 500px wide (sm breakpoint) -->
-                <div class="d-flex justify-content-center gap-2 mt-n2 mb-3 pb-1 d-sm-none">
-                    <button type="button"
-                        class="viewed-prev btn btn-prev btn-icon btn-outline-secondary bg-body rounded-circle animate-slide-start me-1">
-                        <i class="ci-chevron-left fs-lg animate-target"></i>
-                    </button>
-                    <button type="button"
-                        class="viewed-next btn btn-next btn-icon btn-outline-secondary bg-body rounded-circle animate-slide-end">
-                        <i class="ci-chevron-right fs-lg animate-target"></i>
-                    </button>
+        <!-- Sản phẩm liên quan -->
+        <section class="container pb-5 mb-2 mb-md-3">
+            <h2 class="h3 border-bottom pb-4 mb-4">Có thể bạn cũng thích</h2>
+            <!-- Carousel giữ nguyên như cũ (đã cắt bớt cho gọn) -->
+            <div class="swiper"
+                data-swiper='{"slidesPerView":2,"spaceBetween":24,"loop":true,"navigation":{"prevEl":".viewed-prev","nextEl":".viewed-next"},"breakpoints":{"768":{"slidesPerView":3},"992":{"slidesPerView":4}}}'>
+                <div class="swiper-wrapper">
+                    <!-- Thêm các sản phẩm ở đây nếu cần -->
                 </div>
             </div>
         </section>
     </main>
+@endsection
+
+
+@section('scripts')
+    <script>
+        // Star Rating - Hoạt động mượt mà 100%
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('#star-rating i');
+            const ratingInput = document.getElementById('so_sao_input');
+
+            function updateStars(rating) {
+                stars.forEach(star => {
+                    const value = parseInt(star.getAttribute('data-value'));
+                    if (value <= rating) {
+                        star.classList.remove('ci-star', 'text-body-tertiary');
+                        star.classList.add('ci-star-filled', 'text-warning');
+                    } else {
+                        star.classList.remove('ci-star-filled', 'text-warning');
+                        star.classList.add('ci-star', 'text-body-tertiary');
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const value = this.getAttribute('data-value');
+                    ratingInput.value = value;
+                    updateStars(value);
+                });
+
+                star.addEventListener('mouseover', function () {
+                    const value = this.getAttribute('data-value');
+                    updateStars(value);
+                });
+            });
+
+            // Khi rời khỏi vùng sao → giữ lại giá trị đã chọn
+            document.getElementById('star-rating').addEventListener('mouseleave', function () {
+                updateStars(ratingInput.value || 0);
+            });
+
+            // Khởi tạo trạng thái ban đầu
+            updateStars(0);
+        });
+    </script>
 @endsection

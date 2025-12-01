@@ -1,12 +1,17 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\DonHang;
-use App\Models\DonHang_ChiTiet;
+use App\Models\DonHangChiTiet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use PhpParser\Node\Expr\Cast\Double;
+use Illuminate\Support\Facades\Storage;
+
 class KhachHangController extends Controller
 {
     public function __construct()
@@ -38,8 +43,66 @@ class KhachHangController extends Controller
     {
         //kiểm tra đầu vào
         $this->validate($request, [
-            'diachi'=>['require','string','max:255'],
-            'sodienthoai'=>['require','string','size:10']
+            'diachi' => ['required', 'string', 'max:255'],
+            'sodienthoai' => ['required', 'string', 'size:10']
+        ]);
+
+        //lưu vào hóa đơn
+        $dh = new DonHang();
+        $dh->user_id = Auth::user()->id;
+        $dh->tinhtrang_id = 1;//mặc định "chờ xác nhận"
+        $dh->diachi = $request->diachi;
+        $dh->sodienthoai = $request->sodienthoai;
+
+        $tongtien = (Double) str_replace('.', '', Cart::total());
+        $dh->tongtien = $tongtien;
+
+        $VAT = (Double) str_replace('.', '', Cart::tax());
+        $dh->VAT = $VAT;
+
+        $dh->save();
+
+        //lưu vào chi tiết hóa đơn
+        foreach (Cart::content() as $value) {
+            $ctdh = new DonHangChiTiet();
+            $ctdh->donhang_id = $dh->id;
+            $ctdh->sanpham_id = $value->id;
+            $ctdh->soluong = $value->qty;
+            $ctdh->dongia = $value->price;
+            $ctdh->thanhtien = $value->qty * $value->price;
+            $ctdh->hinhanh = $value->options->hinhanh;
+            $ctdh->gia = $value->options->gia;
+            $ctdh->khuyenmai = $value->options->khuyenmai;
+            $ctdh->gia_khuyenmai = $value->options->gia_khuyenmai;
+
+            $ctdh->save();
+        }
+
+        // Cộng điểm khi mua hàng (giả sử 1% tổng tiền làm điểm, và User có trường 'diem')
+        $user = Auth::user();
+        $diem = floor($tongtien / 10000); // Ví dụ: 1 điểm cho mỗi 100 VNĐ, điều chỉnh theo logic của bạn
+        $user->points += $diem; // Giả sử trường điểm tên 'diem'
+        $user->save();
+
+        return redirect()->route('user.dathangthanhcong');
+    }
+
+    //Đánh giá
+    public function getDanhGia()
+    {
+        if (Auth::check())
+            return view('frontend.sanpham-chitiet');
+        else
+            return view('user.dangnhap');
+
+    }
+
+    public function postDanhGia(Request $request)
+    {
+        //kiểm tra đầu vào
+        $this->validate($request, [
+            'diachi' => ['required', 'string', 'max:255'],
+            'sodienthoai' => ['required', 'string', 'size:10']
         ]);
 
         //lưu vào hóa đơn
@@ -51,12 +114,13 @@ class KhachHangController extends Controller
         $dh->save();
 
         //lưu vào chi tiết
-        foreach(Cart::content() as $value){
+        foreach (Cart::content() as $value) {
             $ctdh = new DonHang_ChiTiet();
 
         }
         return redirect()->route('user.dathangthanhcong');
     }
+
 
     public function getDatHangThanhCong()
     {
@@ -84,8 +148,8 @@ class KhachHangController extends Controller
         $id = Auth::user()->id;
 
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
+            'name' => ['requiredd', 'string', 'max:255'],
+            'email' => ['requiredd', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
         ]);
 
         $orm = User::find($id);
@@ -118,5 +182,34 @@ class KhachHangController extends Controller
     {
         // Bổ sung code tại đây
         return redirect()->route('frontend.home');
+    }
+
+
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('avatar')) {
+            // Xóa ảnh cũ nếu có
+            if ($user->hinhanh && Storage::disk('public')->exists($user->hinhanh)) {
+                Storage::disk('public')->delete($user->hinhanh);
+            }
+
+            // Upload ảnh mới với tên file slug
+            $extension = $request->file('avatar')->extension();
+            $filename = Str::slug($user->name, '-') . '-' . time() . '.' . $extension;
+            $path = Storage::disk('public')->putFileAs('anh-dai-dien', $request->file('avatar'), $filename);
+
+            $user->hinhanh = $path;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Cập nhật ảnh đại diện thành công!');
+        }
+
+        return redirect()->back()->with('warning', 'Vui lòng chọn ảnh để tải lên!');
     }
 }

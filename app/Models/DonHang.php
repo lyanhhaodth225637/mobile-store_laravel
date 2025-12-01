@@ -3,27 +3,31 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class DonHang extends Model
 {
     protected $table = 'DonHang';
     protected $fillable = [
-        'users_id',
+        'user_id',
         'tinhtrang_id',
         'sodienthoai',
         'diachi',
     ];
-    public function TinhTrang(): BelongsTo
+    public function tinhtrang()
     {
-        return $this->belongsTo('tinhtrang_id', 'id');
+        return $this->belongsTo(TinhTrang::class, 'tinhtrang_id');
     }
 
-    public function User(): BelongsTo
+
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function DonHang_ChiTiet(): HasMany
+
+    public function donhang_chitiet(): HasMany
     {
-        return $this->hasMany(DonHang_ChiTiet::class, 'donhang_id', 'id');
+        return $this->hasMany(DonHangChiTiet::class, 'donhang_id');
     }
+
 }

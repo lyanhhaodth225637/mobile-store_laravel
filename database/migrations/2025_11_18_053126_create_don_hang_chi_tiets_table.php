@@ -14,6 +14,11 @@ return new class extends Migration {
             $table->foreignId('sanpham_id')->constrained('sanpham');
             $table->integer('soluong');
             $table->double('dongia');
+            $table->double('thanhtien')->nullable();
+            $table->string('hinhanh')->nullable();
+            $table->double('gia');
+            $table->tinyInteger('khuyenmai')->default(0);
+            $table->double('gia_khuyenmai')->nullable();
             $table->string('mota')->nullable();
             $table->timestamps();
         });

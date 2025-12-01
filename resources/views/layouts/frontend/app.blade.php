@@ -293,8 +293,8 @@
                     href="{{ route('user.home') }}">
                     @if(Auth::check())
                         <img src="{{ asset('storage/' . Auth::user()->hinhanh) }}" class="rounded-circle" style="object-fit: cover;
-                                                                    width: 50px;
-                                                                    height: 50px;" alt="Avatar" />
+                                                                        width: 50px;
+                                                                        height: 50px;" alt="Avatar" />
                     @else
                         <i class="ci-user animate-target"></i>
                         <span class="visually-hidden">Tài khoản</span>
@@ -397,6 +397,7 @@
     <script src="{{ asset('assets/vendor/flatpickr/flatpickr.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/cleave.js/cleave.min.js') }}"></script>
     @yield('javascript')
+    @yield('scripts')
 
     <!-- Bootstrap + Theme scripts -->
     <script src="{{ asset('assets/js/theme.min.js') }}"></script>

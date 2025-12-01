@@ -32,7 +32,6 @@
             aria-controls="loaisanpham">
             <span>Danh Mục</span>
         </a>
-
         <div id="danhmuc"
             class="collapse {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'show' : '' }}"
             aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -42,10 +41,13 @@
                     href="{{ route('admin.loaisanpham') }}">Loại Sản Phẩm</a>
                 <a class="collapse-item {{ Request::routeIs('admin.hangsanxuat') ? 'active' : '' }}"
                     href="{{ route('admin.hangsanxuat') }}">Hãng Sản Xuất</a>
+                <a class="collapse-item {{ Request::routeIs('admin.tinhtrang') ? 'active' : '' }}"
+                    href="{{ route('admin.tinhtrang') }}">Tình trạng</a>
 
             </div>
         </div>
     </li>
+
     <!-- === -->
     <li class="nav-item {{ Request::routeIs(['admin.loaisanpham*', 'admin.hangsanxuat*']) ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loaisanpham" aria-expanded="true"
@@ -89,50 +91,35 @@
             </div>
         </div>
     </li>
+
     <!-- == -->
-    <li class="nav-item {{ Request::routeIs(['admin.user*',]) ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#user" aria-expanded="true"
-            aria-controls="user">
+    <li class="nav-item {{ Request::routeIs(['admin.donhang*']) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#donhang" aria-expanded="true"
+            aria-controls="donhang">
             <span>Đơn hàng</span>
         </a>
-        <div id="user" class="collapse {{ Request::routeIs(['admin.user*',]) ? 'show' : '' }}"
-            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="donhang" class="collapse {{ Request::routeIs(['admin.donhang*']) ? 'show' : '' }}"
+            aria-labelledby="headingDonHang" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::routeIs('admin.user') ? 'active' : '' }}"
-                    href="{{ route('admin.user') }}">Người dùng</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_moi') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_moi') }}">Khách hàng mới</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_thanthiet') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_thanthiet') }}">Khách hàng thân thiết</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_vip') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_vip') }}">khách hàng VIP</a>
-
-
+                <a class="collapse-item {{ Request::routeIs('admin.donhang') ? 'active' : '' }}"
+                    href="{{ route('admin.donhang') }}">
+                    Tất cả đơn hàng
+                </a>
+                <a class="collapse-item {{ Request::routeIs('admin.donhang.choxacnhan') ? 'active' : '' }}" href="">
+                    Chờ xác nhận
+                </a>
+                <a class="collapse-item {{ Request::routeIs('admin.donhang.danggiao') ? 'active' : '' }}" href="">
+                    Đang giao
+                </a>
+                <a class="collapse-item {{ Request::routeIs('admin.donhang.hoanthanh') ? 'active' : '' }}" href="">
+                    Hoàn thành
+                </a>
             </div>
         </div>
     </li>
+
     <!-- == -->
-    <li class="nav-item {{ Request::routeIs(['admin.user*',]) ? 'active' : '' }}">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#user" aria-expanded="true"
-            aria-controls="user">
-            <span>Hộp đồng trả góp</span>
-        </a>
-        <div id="user" class="collapse {{ Request::routeIs(['admin.user*',]) ? 'show' : '' }}"
-            aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item {{ Request::routeIs('admin.user') ? 'active' : '' }}"
-                    href="{{ route('admin.user') }}">Người dùng</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_moi') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_moi') }}">Khách hàng mới</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_thanthiet') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_thanthiet') }}">Khách hàng thân thiết</a>
-                <a class="collapse-item {{ Request::routeIs('admin.user.khachhang_vip') ? 'active' : '' }}"
-                    href="{{ route('admin.user.khachhang_vip') }}">khách hàng VIP</a>
 
-
-            </div>
-        </div>
-    </li>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

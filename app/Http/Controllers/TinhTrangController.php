@@ -7,59 +7,61 @@ use Illuminate\Http\Request;
 
 class TinhTrangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   public function getDanhSach()
     {
-        //
+        $tinhtrang = TinhTrang::orderBy('tinhtrang', 'asc')->get();
+        return view('admin.tinhtrang.danhsach', compact('tinhtrang'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getThem()
     {
-        //
+        return view('admin.tinhtrang.them');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    //chưa sửa
+    public function postThem(Request $request)
     {
-        //
+        $request->validate([
+            'tenloai' => ['required', 'string', 'max:255', 'unique:loaisanpham,tenloai'],
+        ]);
+
+        $orm = new LoaiSanPham();
+        $orm->tenloai = Str::title($request->tenloai);
+        $orm->tenloai_slug = Str::slug($orm->tenloai, '-');
+        $orm->save();
+
+        return redirect()->route('admin.loaisanpham')->with('success', 'Thêm loại sản phẩm thành công!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(TinhTrang $tinhTrang)
+    public function getSua($id)
     {
-        //
+        $loaisanpham = LoaiSanPham::findOrFail($id);
+
+        return view('admin.loaisanpham.sua', compact('loaisanpham'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(TinhTrang $tinhTrang)
+    public function postSua(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tenloai' => ['required', 'string', 'max:255', Rule::unique('loaisanpham', 'tenloai')->ignore($id)],
+        ]);
+
+        $orm = LoaiSanPham::findOrFail($id);
+        $orm->tenloai = Str::title($request->tenloai);
+        $orm->tenloai_slug = Str::slug($orm->tenloai, '-');
+        $orm->save();
+
+        return redirect()->route('admin.loaisanpham')->with('success', 'Cập nhật loại sản phẩm thành công!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, TinhTrang $tinhTrang)
+    public function getXoa($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TinhTrang $tinhTrang)
-    {
-        //
+        $orm = LoaiSanPham::find($id);
+        if ($orm) {
+            $orm->delete();
+            return redirect()->route('admin.loaisanpham')->with('success', 'Xóa thành công');
+        }
+        return redirect()->route('admin.loaisanpham')->with('error', 'Lỗi khi xóa');
     }
 }
