@@ -17,19 +17,19 @@ class UserController extends Controller
     }
     public function getKhachHang_Moi()
     {
-        $user = User::where('role', '2')->where('points', '>', '0')->where('points', '<=', '100')
+        $user = User::where('role', '1')->where('points', '>=', '0')->where('points', '<=', '100')
             ->get();
         return view('admin.user.khachhang_moi', compact('user'));
     }
     public function getKhachHang_ThanThiet()
     {
-        $user = User::where('role', '2')->where('points', '>', '100')->where('points', '<=', '500')
+        $user = User::where('role', '1')->where('points', '>', '100')->where('points', '<=', '500')
             ->get();
         return view('admin.user.khachhang_thanthiet', compact('user'));
     }
     public function getKhachHang_VIP()
     {
-        $user = User::where('role', '2')->where('points', '>', '1000')
+        $user = User::where('role', '1')->where('points', '>', '1000')
             ->get();
         return view('admin.user.khachhang_vip', compact('user'));
     }

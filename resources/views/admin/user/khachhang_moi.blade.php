@@ -1,5 +1,5 @@
 @extends('layouts.admin.app')
-@section('content')` # #    
+@section('content')
     <div class="container-fluid">
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Khách hàng mới</h1>
@@ -84,7 +84,7 @@
 
     </div>
     <!-- cuối content: include modal partial -->
-    @include('admin.user.them');
+    @include('admin.user.them')
 @endsection
 
 @section('js')

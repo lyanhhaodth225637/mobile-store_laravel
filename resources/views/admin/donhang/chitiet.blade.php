@@ -6,8 +6,8 @@
             <!-- Header -->
             <div class="modal-header bg-gradient text-white"
                 style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                <h5 class="modal-title fw-bold" id="modalChiTietLabel">
-                    <i class="fas fa-shopping-bag me-2"></i>Chi tiết Đơn hàng #{{ $dh->id }}
+                <h5 class="modal-title fw-bold text-black" id="modalChiTietLabel">
+                    <i class="fas fa-shopping-bag me-2 text-black"></i>Chi tiết Đơn hàng
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Đóng"></button>

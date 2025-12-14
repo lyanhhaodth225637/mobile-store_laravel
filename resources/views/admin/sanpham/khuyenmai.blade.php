@@ -121,7 +121,8 @@
                                     <td>{{ $sp->hangsanxuat->tenhang }}</td>
                                     <td>{{ $sp->soluong }}</td>
                                     <td>{{ $sp->khuyenmai }}</td>
-                                    <td>{{ $sp->gia_khuyenmai }}</td>
+                                    <td>{{ number_format($sp->gia_khuyenmai, 0, ',', '.') }}</td>
+
                                     <td>@if($sp->trangthai == 0)
                                                 <span class="badge bg-danger">Dừng bán</span>
                                             @elseif($sp->trangthai == 1)

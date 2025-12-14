@@ -161,12 +161,9 @@
                             <label class="form-label fw-bold text-dark">
                                 <i class="fas fa-cogs text-primary me-2"></i>Thông số kỹ thuật:
                             </label>
-                            @php
-                                $thongso = json_decode($sp->thongso, true) ?? [];
-                            @endphp
-                            @if (!empty($thongso))
+                            @if (!empty($sp->thongso))
                                 <ul class="list-group list-group-flush ms-2">
-                                    @foreach ($thongso as $key => $value)
+                                    @foreach ($sp->thongso as $key => $value)
                                         <li class="list-group-item d-flex justify-content-between align-items-start border-0 p-1">
                                             <span class="fw-bold text-capitalize">{{ str_replace('_', ' ', $key) }}:</span>
                                             <span class="ms-2">{{ $value }}</span>

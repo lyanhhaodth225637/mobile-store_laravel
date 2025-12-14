@@ -45,8 +45,8 @@
                             </select>
 
                            <select name="kho" class="form-select" style="width: 180px;">
-                                <option value="">Kho</option>
-                                <option value="0" {{ request('kho') == '0' ? 'selected' : '' }}>Dừng bán</option>
+                                <option value="">Trạng thái</option>
+                                <option value="0" {{ request('kho') == '0' ? 'selected' : '' }}>Ngưng bán</option>
                                 <option value="1" {{ request('kho') == '1' ? 'selected' : '' }}>Đang bán</option>
                                 <option value="2" {{ request('kho') == '2' ? 'selected' : '' }}>Đặt trước</option>
                             </select>
@@ -101,6 +101,7 @@
                                 <th width="12%">Loại sản phẩm</th>
                                 <th width="8%">Hãng</th>
                                 <th width="10%">Số lượng</th>
+                                <th width="10%">Đã bán</th>
                                 <th width="10%">Giá</th>
 
                                 <th width="10%">Trạng thái</th>
@@ -122,7 +123,9 @@
                                     <td>{{ $sp->loaisanpham->tenloai }}</td>
                                     <td>{{ $sp->hangsanxuat->tenhang }}</td>
                                     <td>{{ $sp->soluong }}</td>
-                                    <td>{{ $sp->gia }}</td>
+                                    <td>{{ $sp->daban }}</td>
+                                  <td>{{ number_format($sp->gia, 0, ',', '.') }}₫</td>
+
                                     <td>@if($sp->trangthai == 0)
                                                 <span class="badge bg-danger">Dừng bán</span>
                                             @elseif($sp->trangthai == 1)

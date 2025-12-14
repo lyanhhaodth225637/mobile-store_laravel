@@ -100,7 +100,7 @@ class HangSanXuatController extends Controller
 
     public function postNhap(Request $request)
     {
-        // ✅ Bước 1: Kiểm tra file hợp lệ
+        
         $request->validate([
             'file_excel' => 'required|mimes:xlsx,xls,csv|max:5120', // Giới hạn 5MB
         ], [
@@ -113,7 +113,7 @@ class HangSanXuatController extends Controller
             Excel::import(new HangSanXuatImport, $request->file('file_excel'));
             return redirect()->route('admin.hangsanxuat')->with('success', 'Nhập dữ liệu thành công!');
         } catch (Exception $e) {
-            // Nếu file bị lỗi (ví dụ không đúng cấu trúc cột)
+            
             return redirect()->route('admin.hangsanxuat')->with('error', 'File Excel không hợp lệ hoặc bị lỗi!');
         }
     }

@@ -15,7 +15,7 @@
                     <a hidden class="btn bg-gradient-info text-gray-100 " href=""><i class="fa-solid fa-download"></i>
                         Export</a>
                 </div>
-                <a class="btn bg-gradient-primary text-gray-100" href="#" data-bs-toggle="modal"
+                <a hidden class="btn bg-gradient-primary text-gray-100" href="#" data-bs-toggle="modal"
                     data-bs-target="#modalThem">
                     <i class="fa-regular fa-plus"></i> Thêm
                 </a>
@@ -67,7 +67,8 @@
                                     <td>{{ $dh->sodienthoai }}</td>
                                     <td>{{ $dh->diachi }}</td>
                                     <td>{{ $dh->tinhtrang->tinhtrang }}</td>
-                                    <td>{{ $dh->tongtien }} VNĐ</td>
+                                    <td>{{ number_format($dh->tongtien, 0, ',', '.') }}</td>
+
 
                                     <td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#modalSua"><i
                                                 class="fa-light fa-edit"></i></a>

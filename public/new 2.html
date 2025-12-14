@@ -1,0 +1,426 @@
+@extends('layouts.frontend.app')
+
+@section('title', 'Chi tiết sản phẩm')
+
+@section('styles')
+    <style>
+        #star-rating {
+            gap: 12px;
+        }
+
+        #star-rating i {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        #star-rating i:hover {
+            transform: scale(1.3);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+@endsection
+@section('content')
+    <!-- Page content -->
+    <main class="content-wrapper">
+        <nav class="container pt-3 my-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('frontend.home') }}">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="#">Sản phẩm</a></li>
+                <li class="breadcrumb-item active">Chi tiết</li>
+            </ol>
+        </nav>
+
+        <h1 class="h3 container mb-3">{{ $sanpham->tensanpham }}</h1>
+
+        <section class="container position-relative z-2 pb-4 pb-md-5 mb-2 mb-md-0">
+            <div class="border-bottom">
+                <ul class="nav nav-underline flex-nowrap gap-4" id="productTabs" role="tablist">
+                    <li class="nav-item me-sm-2" role="presentation">
+                        <a class="nav-link active" id="basic-tab" data-bs-toggle="tab" href="#basic" role="tab">
+                            Thông tin cơ bản
+                        </a>
+                    </li>
+                    <li class="nav-item me-sm-2" role="presentation">
+                        <a class="nav-link" id="specs-tab" data-bs-toggle="tab" href="#specs" role="tab">
+                            Thông số kỹ thuật
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab">
+                            Đánh giá (68)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Product details + Sticky sidebar -->
+        <section class="container pb-2 mb-2 mb-md-3">
+            <div class="row">
+                <!-- Sticky product preview (desktop) -->
+                <aside class="col-md-5 col-xl-4 offset-xl-1 order-md-2 mb-5 mb-md-0" id="scrollPastPoint"
+                    style="margin-top:-100px">
+                    <div class="position-sticky top-0 ps-md-3 ps-lg-4 ps-xl-0" style="padding-top:100px">
+                        <div class="border rounded p-3 p-lg-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="ratio ratio-1x1 flex-shrink-0" style="width:110px">
+                                    <img src="{{ asset('storage/' . $sanpham->hinhanh) }}" width="110" alt="iPhone 14" />
+                                </div>
+                                <div class="w-100 min-w-0 ps-2 ps-sm-3">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <div class="d-flex gap-1 fs-xs">
+                                            <i class="ci-star-filled text-warning"></i>
+                                            <i class="ci-star-filled text-warning"></i>
+                                            <i class="ci-star-filled text-warning"></i>
+                                            <i class="ci-star-filled text-warning"></i>
+                                            <i class="ci-star text-body-tertiary opacity-75"></i>
+                                        </div>
+                                        <span class="text-body-tertiary fs-xs">68</span>
+                                    </div>
+                                    <h4 class="fs-sm fw-medium mb-2">{{ $sanpham->tensanpham }}</h4>
+                                    @if ($sanpham->khuyenmai > 0 && $sanpham->gia_khuyenmai)
+                                        <div class="h5 mb-0">
+                                            <del class="text-muted me-2 fs-6">{{ number_format($sanpham->gia, 0, ',', '.') }}
+                                                ₫</del>
+                                            <span class="badge bg-danger ms-2">-{{ $sanpham->khuyenmai }}%</span>
+
+                                            <br>
+                                            <span class="text-danger">{{ number_format($sanpham->gia_khuyenmai, 0, ',', '.') }}
+                                                ₫</span>
+                                        </div>
+                                    @else
+                                        <div class="h5 mb-0">{{ number_format($sanpham->gia, 0, ',', '.') }} ₫</div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2 gap-lg-3">
+                                <form action="{{ route('frontend.giohang.them') }}" method="POST" class="add-to-cart-form">
+                                    @csrf
+                                    <input type="hidden" name="tensanpham_slug" value="{{ $sanpham->tensanpham_slug }}">
+                                    <button type="submit" class="btn btn-primary w-100 animate-slide-end">
+                                        <i class="ci-shopping-cart fs-base animate-target ms-n1 me-2"></i> Thêm vào giỏ hàng
+                                    </button>
+                                </form>
+                                <button type="button" class="btn btn-icon btn-secondary animate-pulse"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-sm"
+                                    data-bs-title="Thêm vào yêu thích">
+                                    <i class="ci-heart fs-base animate-target"></i>
+                                </button>
+                                <button type="button" class="btn btn-icon btn-secondary animate-rotate"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="tooltip-sm"
+                                    data-bs-title="So sánh">
+                                    <i class="ci-refresh-cw fs-base animate-target"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Mobile sticky banner -->
+                <section class="sticky-product-banner sticky-top d-md-none start-0 ms-n4" data-sticky-element>
+                    <div class="sticky-product-banner-inner start-0 pt-5">
+                        <div class="vw-100 bg-body border-bottom border-light border-opacity-10 shadow pt-4 pb-2">
+                            <div class="container d-flex align-items-center">
+                                <div class="d-flex align-items-center min-w-0 ms-n2 me-3">
+                                    <div class="ratio ratio-1x1 flex-shrink-0" style="width:50px">
+                                        <img src="assets/img/shop/10.png" alt="iPhone 14" />
+                                    </div>
+                                    <div class="w-100 min-w-0 ps-2">
+                                        <h4 class="fs-sm fw-medium text-truncate mb-1">{{ $sanpham->tensanpham }}</h4>
+                                        <div class="h6 mb-0">{{ $sanpham->gia }}</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2 ms-auto">
+                                    <button type="button" class="btn btn-icon btn-secondary animate-pulse">
+                                        <i class="ci-heart fs-base animate-target"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary animate-slide-end d-none d-sm-inline-flex">
+                                        <i class="ci-shopping-cart fs-base animate-target ms-n1 me-2"></i> Thêm vào giỏ hàng
+                                    </button>
+                                    <button type="button" class="btn btn-icon btn-primary animate-slide-end d-sm-none">
+                                        <i class="ci-shopping-cart fs-lg animate-target"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tab content -->
+                <div class="col-md-7 order-md-1 tab-content" id="productTabContent">
+                    <!-- Thông tin cơ bản -->
+                    <div class="tab-pane fade show active" id="basic" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Thông tin cơ bản</h2>
+                        <h5>{{ $sanpham->tensanpham }}</h5>
+                        <h6>Đã bán: 100 sản phẩm</h6>
+                        @if($sanpham->mota)
+                            <p>{{ $sanpham->mota }}</p>
+                        @else
+                            <p>Sản phẩm đang cập nhật</p>
+                        @endif
+                    </div>
+                    <!-- Thông số kỹ thuật -->
+                    <div class="tab-pane fade" id="specs" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Thông số kỹ thuật</h2>
+                        <h3 class="h6">Thông số chung</h3>
+                        <ul class="list-unstyled d-flex flex-column gap-3 fs-sm pb-3 m-0 mb-2 mb-sm-3">
+                            @foreach ($sanpham->thongso as $key => $value)
+                                <li class="d-flex align-items-center position-relative pe-4">
+                                    <span>{{ ucfirst(str_replace('_', ' ', $key)) }}</span>
+                                    <span class="d-block flex-grow-1 border-bottom border-dashed px-1 mt-2 mx-2"></span>
+                                    <span class="text-dark-emphasis fw-medium text-end">{{ $value }}.</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="alert d-flex alert-info" role="alert">
+                            <i class="ci-info fs-lg pe-1 me-2" style="margin-top:.125rem"></i>
+                            <div class="fs-sm">Thông số kỹ thuật có thể thay đổi mà không báo trước.</div>
+                        </div>
+                    </div>
+
+                    <!-- Đánh giá -->
+                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                        <h2 class="h3 pb-2 pb-md-3">Đánh giá</h2>
+
+                        <!-- Tổng quan đánh giá -->
+                        <div class="d-flex align-items-center gap-3 mb-4 pb-2">
+                            <div class="d-flex gap-1">
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star-filled fs-base text-warning"></i>
+                                <i class="ci-star fs-base text-body-tertiary opacity-75"></i>
+                            </div>
+                            <span class="h3 mb-0">4.0</span>
+                            <span class="text-body-tertiary fs-sm pt-1">(68 đánh giá)</span>
+                        </div>
+
+                        <!-- Form viết đánh giá -->
+                        <h3 class="h5 mb-3">Viết đánh giá của bạn</h3>
+                        <form action="{{ route('user.binhluan') }}" method="POST" class="mb-5">
+                            @csrf
+                            <input type="hidden" name="sanpham_id" value="{{ $sanpham->id }}">
+                            <input type="hidden" name="parent_id" value="">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <!-- Star Rating -->
+                                    <div class="d-flex gap-3 mb-3" id="star-rating">
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="1"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="2"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="3"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="4"></i>
+                                        <i class="ci-star fs-2 text-body-tertiary cursor-pointer" data-value="5"></i>
+                                    </div>
+                                    <input type="hidden" name="danhgia" id="so_sao_input" value="0">
+
+                                    <textarea class="form-control" name="noidung" rows="5"
+                                        placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..." required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary animate-slide-end">
+                                        Gửi đánh giá
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                        <!-- Danh sách đánh giá -->
+                        <div class="border-bottom pb-4 mb-4">
+                            <div class="d-flex gap-3 mb-4">
+                                <img class="rounded-circle flex-shrink-0" src="assets/img/avatars/01.jpg" width="48"
+                                    alt="Avatar">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <div>
+                                            <h6 class="mb-1">Nguyễn Văn A</h6>
+                                            <div class="d-flex gap-1 fs-xs">
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star-filled text-warning"></i>
+                                                <i class="ci-star text-body-tertiary opacity-75"></i>
+                                            </div>
+                                        </div>
+                                        <span class="text-body-tertiary fs-sm">2 ngày trước</span>
+                                    </div>
+                                    <p class="mb-2">Sản phẩm tuyệt vời! Pin trâu, camera đẹp, hiệu năng mượt mà.</p>
+                                    <div class="d-flex gap-3 fs-sm">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ci-thumbs-up me-1"></i> Hữu ích (5)
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <i class="ci-thumbs-down me-1"></i> Không hữu ích (0)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sản phẩm liên quan -->
+        <section class="container pb-5 mb-2 mb-md-3">
+            <h2 class="h3 border-bottom pb-4 mb-4">Có thể bạn cũng thích</h2>
+            <!-- Carousel giữ nguyên như cũ (đã cắt bớt cho gọn) -->
+            <div class="swiper"
+                data-swiper='{"slidesPerView":2,"spaceBetween":24,"loop":true,"navigation":{"prevEl":".viewed-prev","nextEl":".viewed-next"},"breakpoints":{"768":{"slidesPerView":3},"992":{"slidesPerView":4}}}'>
+                <div class="swiper-wrapper">
+                    <!-- Thêm các sản phẩm ở đây nếu cần -->
+                </div>
+            </div>
+        </section>
+    </main>
+@endsection
+
+
+@section('scripts')
+    <script>
+        // Star Rating - Hoạt động mượt mà 100%
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('#star-rating i');
+            const ratingInput = document.getElementById('so_sao_input');
+
+            function updateStars(rating) {
+                stars.forEach(star => {
+                    const value = parseInt(star.getAttribute('data-value'));
+                    if (value <= rating) {
+                        star.classList.remove('ci-star', 'text-body-tertiary');
+                        star.classList.add('ci-star-filled', 'text-warning');
+                    } else {
+                        star.classList.remove('ci-star-filled', 'text-warning');
+                        star.classList.add('ci-star', 'text-body-tertiary');
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const value = this.getAttribute('data-value');
+                    ratingInput.value = value;
+                    updateStars(value);
+                });
+
+                star.addEventListener('mouseover', function () {
+                    const value = this.getAttribute('data-value');
+                    updateStars(value);
+                });
+            });
+
+            // Khi rời khỏi vùng sao → giữ lại giá trị đã chọn
+            document.getElementById('star-rating').addEventListener('mouseleave', function () {
+                updateStars(ratingInput.value || 0);
+            });
+
+            // Khởi tạo trạng thái ban đầu
+            updateStars(0);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Xử lý sự kiện submit form thêm vào giỏ hàng
+            document.querySelectorAll('.add-to-cart-form').forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                        },
+                        body: new FormData(this)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // 1. Cập nhật số lượng giỏ hàng trên Header/Menu
+                                document.querySelectorAll('.cart-count').forEach(el => {
+                                    el.textContent = data.count;
+                                });
+
+                                // 2. Nếu đang mở giỏ hàng (Offcanvas) thì reload để cập nhật nội dung
+                                const offcanvas = document.getElementById('shoppingCart');
+                                if (offcanvas && offcanvas.classList.contains('show')) {
+                                    location.reload();
+                                }
+
+                                // 3. Hiển thị thông báo thành công
+                                showToast(data.message);
+                            }
+                        })
+                        .catch(err => console.error('Lỗi AJAX:', err));
+                });
+            });
+        });
+
+        // Hàm hiển thị thông báo Toast (Tự động tắt sau 3 giây)
+        function showToast(message) {
+            // Tạo cấu trúc HTML cho Toast
+            const toastHTML = `
+                                            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+                                                <div class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                                                    <div class="d-flex">
+                                                        <div class="toast-body fw-medium">
+                                                            <i class="ci-check-circle me-2"></i> ${message}
+                                                        </div>
+                                                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+
+            // Tạo div bao ngoài và thêm vào body
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = toastHTML;
+            document.body.appendChild(wrapper);
+
+            const toastEl = wrapper.querySelector('.toast');
+
+            // Khởi tạo Bootstrap Toast với tùy chọn delay: 3000 (3 giây)
+            const bsToast = new bootstrap.Toast(toastEl, {
+                delay: 3000,     // Thời gian chờ 3000ms = 3s
+                autohide: true   // Tự động ẩn
+            });
+
+            // Hiển thị Toast
+            bsToast.show();
+
+            // Lắng nghe sự kiện khi Toast ẩn xong thì xóa khỏi HTML để tránh rác DOM
+            toastEl.addEventListener('hidden.bs.toast', () => {
+                wrapper.remove();
+            });
+        }
+    </script>
+    <script>const form = document.querySelector('form');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault(); // ngăn reload page
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json'
+                },
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Bình luận đã gửi!');
+                        // bạn có thể append comment vào danh sách bình luận ở đây
+                    } else {
+                        alert('Gửi bình luận thất bại!');
+                    }
+                })
+                .catch(err => console.log(err));
+        });
+    </script>
+@endsection

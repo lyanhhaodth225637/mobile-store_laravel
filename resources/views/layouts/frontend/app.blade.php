@@ -24,7 +24,7 @@
     <!-- Preloaded local web font (Inter) -->
     <link rel="preload" href="{{ asset('assets/fonts/inter-variable-latin.woff2') }}" as="font" type="font/woff2"
         crossorigin />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Font icons -->
     <link rel="preload" href="{{ asset('assets/icons/cartzilla-icons.woff2') }}" as="font" type="font/woff2"
         crossorigin />
@@ -46,21 +46,23 @@
     <!-- Search offcanvas -->
     <div class="offcanvas offcanvas-top" id="searchBox" data-bs-backdrop="static" tabindex="-1">
         <div class="offcanvas-header border-bottom p-0 py-lg-1">
-            <form class="container d-flex align-items-center">
-                <input type="search" class="form-control form-control-lg fs-lg border-0 rounded-0 py-3 ps-0"
-                    placeholder="Bạn muốn tìm gì?" data-autofocus="offcanvas" />
+            <form class="container d-flex align-items-center" action="{{ route('frontend.timkiem') }}" method="GET">
+                <input type="search" name="keyword"
+                    class="form-control form-control-lg fs-lg border-0 rounded-0 py-3 ps-0"
+                    placeholder="Bạn muốn tìm gì?" data-autofocus="offcanvas" value="{{ $keyword ?? '' }}" />
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                 <button type="reset" class="btn-close fs-lg" data-bs-dismiss="offcanvas"></button>
             </form>
         </div>
         <div class="offcanvas-body px-0">
             <div class="container text-center">
-                <img src="{{ asset('assets/img/icons/search.svg') }}" class="text-body-tertiary opacity-60 mb-4"
-                    alt="Search" />
+                <img src="assets/img/icons/search.svg" class="text-body-tertiary opacity-60 mb-4" alt="Search" />
                 <h6 class="mb-2">Kết quả tìm kiếm của bạn sẽ xuất hiện ở đây</h6>
                 <p class="fs-sm mb-0">Bắt đầu nhập vào trường tìm kiếm ở trên để xem kết quả tìm kiếm ngay lập tức.</p>
             </div>
         </div>
     </div>
+
 
     <!-- Shopping cart offcanvas -->
     <div class="offcanvas offcanvas-end pb-sm-2 px-sm-2" id="shoppingCart" tabindex="-1" style="width:500px">
@@ -208,9 +210,9 @@
                                 chủ</a>
                         </li>
                         <li class="nav-item dropdown py-lg-2 me-lg-n1 me-xl-0">
-                            <a class="nav-link dropdown-toggle" href="{{ route('frontend.sanpham') }}" role="button"
-                                data-bs-toggle="dropdown" data-bs-trigger="hover" data-bs-auto-close="outside"><i
-                                    class="ci-gift me-2"></i>Sản phẩm</a>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                data-bs-trigger="hover" data-bs-auto-close="outside"><i class="ci-gift me-2"></i>Sản
+                                phẩm</a>
                             <ul class="dropdown-menu" style="--cz-dropdown-spacer:.875rem">
                                 <li><a class="dropdown-item"
                                         href="{{ route('frontend.sanpham.phanloai', ['tenloai_slug' => 'dien-thoai']) }}">Điện
@@ -219,18 +221,19 @@
                                         href="{{ route('frontend.sanpham.phanloai', ['tenloai_slug' => 'may-tinh-bang']) }}">Máy
                                         tính bảng</a></li>
                                 <li><a class="dropdown-item"
-                                        href="{{ route('frontend.sanpham.phanloai', ['tenloai_slug' => 'may-tinh-xach-tay']) }}">Máy
-                                        tính xách tay</a></li>
+                                        href="{{ route('frontend.sanpham.phanloai', ['tenloai_slug' => 'laptop']) }}">Laptop</a>
+                                </li>
                             </ul>
+                        </li>
+                        <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
+                            <a class="nav-link" href="{{ route('frontend.tragop') }}"><i
+                                    class="bi bi-card-checklist me-1"></i> Trả góp</a>
                         </li>
                         <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
                             <a class="nav-link" href="{{ route('frontend.baiviet') }}"><i class="ci-globe me-2"></i>Tin
                                 tức</a>
                         </li>
-                        <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                            <a class="nav-link" href="{{ route('frontend.tuyendung') }}"><i
-                                    class="ci-target me-2"></i>Tuyển dụng</a>
-                        </li>
+
                         <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
                             <a class="nav-link" href="{{ route('frontend.lienhe') }}"><i class="ci-chat me-2"></i>Liên
                                 hệ</a>
@@ -245,6 +248,9 @@
                 </div>
             </nav>
 
+
+
+
             <!-- Button group -->
             <div class="d-flex align-items-center">
                 <!-- Theme switcher (light/dark/auto) -->
@@ -256,7 +262,7 @@
                             <i class="ci-sun"></i>
                         </span>
                     </button>
-                    <ul class="dropdown-menu" style="--cz-dropdown-min-width:9rem">
+                    <ul class="dropdown-menu" style="--cz-dropdown-min-width:9rem" hidden>
                         <li>
                             <button type="button" class="dropdown-item active" data-bs-theme-value="light">
                                 <span class="theme-icon d-flex fs-base me-2"><i class="ci-sun"></i></span>
@@ -264,14 +270,14 @@
                                 <i class="item-active-indicator ci-check ms-auto"></i>
                             </button>
                         </li>
-                        <li>
+                        <li hidden>
                             <button type="button" class="dropdown-item" data-bs-theme-value="dark">
                                 <span class="theme-icon d-flex fs-base me-2"><i class="ci-moon"></i></span>
                                 <span class="theme-label">Tối</span>
                                 <i class="item-active-indicator ci-check ms-auto"></i>
                             </button>
                         </li>
-                        <li>
+                        <li hidden>
                             <button type="button" class="dropdown-item" data-bs-theme-value="auto">
                                 <span class="theme-icon d-flex fs-base me-2"><i class="ci-auto"></i></span>
                                 <span class="theme-label">Tự động</span>
@@ -293,8 +299,9 @@
                     href="{{ route('user.home') }}">
                     @if(Auth::check())
                         <img src="{{ asset('storage/' . Auth::user()->hinhanh) }}" class="rounded-circle" style="object-fit: cover;
-                                                                        width: 50px;
-                                                                        height: 50px;" alt="Avatar" />
+                                                                                                    width: 50px;
+                                                                                                    height: 50px;"
+                            alt="Avatar" />
                     @else
                         <i class="ci-user animate-target"></i>
                         <span class="visually-hidden">Tài khoản</span>

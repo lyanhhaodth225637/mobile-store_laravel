@@ -29,5 +29,9 @@ class DonHang extends Model
     {
         return $this->hasMany(DonHangChiTiet::class, 'donhang_id');
     }
+    public function mspayTransactions()
+    {
+        return $this->hasMany(MspayTransaction::class, 'donhang_id');
+    }
 
 }

@@ -14,7 +14,7 @@
                 <div class="col bg-body-tertiary py-5 px-4 px-xl-5">
                     <form class="needs-validation py-md-2 px-md-1 px-lg-3 mx-lg-3" novalidate>
                         <div class="position-relative mb-4">
-                            <label for="name" class="form-label">Name *</label>
+                            <label for="name" class="form-label">Tên *</label>
                             <input type="text" class="form-control form-control-lg rounded-pill" id="name" required />
                             <div class="invalid-tooltip bg-transparent z-0 py-0 ps-3">Enter your name!</div>
                         </div>
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="position-relative mb-4">
-                            <label for="message" class="form-label">Message *</label>
+                            <label for="message" class="form-label">Tin nhắn *</label>
                             <textarea class="form-control form-control-lg rounded-6" id="message" rows="5"
                                 required></textarea>
                             <div class="invalid-tooltip bg-transparent z-0 py-0 ps-3">Write your message!</div>
@@ -71,12 +71,12 @@
                         <li class="nav animate-underline justify-content-center">
                             Tổng đài:
                             <a class="nav-link animate-target fs-base ms-1 p-0"
-                                href="tel:+15053753082">+1&nbsp;50&nbsp;537&nbsp;53&nbsp;082</a>
+                                href="tel:+15053753082">+84&nbsp;54&nbsp;123&nbsp;33&nbsp;22</a>
                         </li>
                         <li class="nav animate-underline justify-content-center">
                             Hỗ trợ kỹ thuật:
                             <a class="nav-link animate-target fs-base ms-1 p-0"
-                                href="tel:+15053753000">+1&nbsp;50&nbsp;537&nbsp;53&nbsp;000</a>
+                                href="tel:+15053753000">+84&nbsp;54&nbsp;123&nbsp;33&nbsp;22</a>
                         </li>
                     </ul>
                 </div>
@@ -106,8 +106,8 @@
                     </div>
                     <h3 class="h6">Địa chỉ</h3>
                     <ul class="list-unstyled m-0">
-                        <li>New York 11741, USA</li>
-                        <li>396 Lillian Bolavandy, Holbrook</li>
+                        <li> ĐẠI HỌC AN GIANG </li>
+                        <li> PHƯỜNG LONG XUYÊN, AN GIANG </li>
                     </ul>
                 </div>
                 <div class="col text-center pt-1 pt-sm-2 pt-md-3">
@@ -117,8 +117,8 @@
                     </div>
                     <h3 class="h6">Giờ làm việc</h3>
                     <ul class="list-unstyled m-0">
-                        <li>Mon - Fri 8:00 - 18:00</li>
-                        <li>Sut - Sun 10:00 - 16:00</li>
+                        <li>Thứ 2 - Thứ 6 7:00 - 17:00</li>
+                        <li>Thứ 7 - Chủ Nhật Nghỉ</li>
                     </ul>
                 </div>
             </section>

@@ -26,9 +26,12 @@ class SanPham extends Model
         'dat_truoc',
     ];
 
+    protected $casts = [
+        'thongso' => 'array',
+    ];
+
     public function HangSanXuat(): BelongsTo
     {
-        //1 hãng sản xuất có n sản phẩm (1-n)
         return $this->belongsTo(HangSanXuat::class, 'hangsanxuat_id', 'id');
     }
 
@@ -36,4 +39,10 @@ class SanPham extends Model
     {
         return $this->belongsTo(LoaiSanPham::class, 'loaisanpham_id', 'id');
     }
+    public function ratings()
+    {
+        return $this->hasMany(BinhLuan::class, 'sanpham_id', 'id');
+    }
+
+
 }

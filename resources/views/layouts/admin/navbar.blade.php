@@ -6,9 +6,9 @@
     </button>
 
     <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="display: none;">
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+            <input type="text" class="form-control bg-light border-0 small" placeholder="tìm kiếm..."
                 aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
@@ -16,7 +16,7 @@
                 </button>
             </div>
         </div>
-    </form>
+    </form> -->
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -32,7 +32,7 @@
                 aria-labelledby="searchDropdown">
                 <form class="form-inline mr-auto w-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                        <input type="text" class="form-control bg-light border-0 small" placeholder=" Tìm kiếm..."
                             aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
@@ -45,7 +45,7 @@
         </li>
 
         <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        <li class="nav-item dropdown no-arrow mx-1" hidden>
             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
@@ -96,7 +96,7 @@
         </li>
 
         <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
+        <li class="nav-item dropdown no-arrow mx-1" hidden>
             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-envelope fa-fw"></i>
@@ -214,7 +214,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img class="rounded-circle me-2" src="{{ asset('/sbadmin2/img/undraw_profile.svg') }}" alt="Profile"
+                        <img class="rounded-circle me-2" src="{{ asset('storage/' . Auth::user()->hinhanh) }}" alt="Profile"
                             style="width: 32px; height: 32px; object-fit: cover;">
                         <span class="d-none d-md-inline text-dark">
                             {{ Auth::user()->name }}
@@ -228,22 +228,22 @@
                             <strong>{{ Auth::user()->name }}</strong>
                         </div>
 
-                        <a class="dropdown-item py-2" href="#">
+                        <a class="dropdown-item py-2" href="#" hidden>
                             <i class="fas fa-user fa-fw me-2 text-primary"></i>
                             Profile
                         </a>
 
-                        <a class="dropdown-item py-2" href="#">
+                        <a class="dropdown-item py-2" href="#" hidden>
                             <i class="fas fa-cogs fa-fw me-2 text-primary"></i>
                             Settings
                         </a>
 
-                        <a class="dropdown-item py-2" href="#">
+                        <a class="dropdown-item py-2" href="#" hidden>
                             <i class="fas fa-list fa-fw me-2 text-primary"></i>
                             Activity Log
                         </a>
 
-                        <div class="dropdown-divider my-1"></div>
+                        <div class="dropdown-divider my-1"></div hidden>
 
                         <a class="dropdown-item py-2 text-danger" href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

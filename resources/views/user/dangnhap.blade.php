@@ -77,6 +77,13 @@
                         khoản</a>
                 </div>
 
+                @if(session('warning'))
+                    <div class="alert d-flex alert-danger" role="alert">
+                        <i class="ci-banned fs-lg pe-1 mt-1 me-2"></i>
+                        <div>{{ session('warning') }}</div>
+                    </div>
+                @endif
+
                 <!-- Form -->
                 <form method="post" action="{{ route('login') }}" class="needs-validation" novalidate>
                     @csrf
@@ -124,7 +131,7 @@
 
                 <!-- Social login -->
                 <div class="d-flex flex-column flex-sm-row gap-3 pb-4 mb-3 mb-lg-4">
-                    <a href="#" class="btn btn-lg btn-outline-secondary w-100 px-2">
+                    <a href="{{ route('google.login') }}" class="btn btn-lg btn-outline-secondary w-100 px-2">
                         <i class="ci-google ms-1 me-1"></i> Google
                     </a>
                     <a href="#" class="btn btn-lg btn-outline-secondary w-100 px-2">

@@ -105,15 +105,52 @@
                     href="{{ route('admin.donhang') }}">
                     Tất cả đơn hàng
                 </a>
-                <a class="collapse-item {{ Request::routeIs('admin.donhang.choxacnhan') ? 'active' : '' }}" href="">
+                <a hidden class="collapse-item {{ Request::routeIs('admin.donhang.choxacnhan') ? 'active' : '' }}"
+                    href="">
                     Chờ xác nhận
                 </a>
-                <a class="collapse-item {{ Request::routeIs('admin.donhang.danggiao') ? 'active' : '' }}" href="">
+                <a hidden class="collapse-item {{ Request::routeIs('admin.donhang.danggiao') ? 'active' : '' }}"
+                    href="">
                     Đang giao
                 </a>
-                <a class="collapse-item {{ Request::routeIs('admin.donhang.hoanthanh') ? 'active' : '' }}" href="">
+                <a hidden class="collapse-item {{ Request::routeIs('admin.donhang.hoanthanh') ? 'active' : '' }}"
+                    href="">
                     Hoàn thành
                 </a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item {{ Request::routeIs(['admin.hopdongtragop*']) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#hopdongtragop" aria-expanded="true"
+            aria-controls="hopdongtragop">
+            <span>Hợp đòng trả góp</span>
+        </a>
+        <div id="hopdongtragop" class="collapse {{ Request::routeIs(['admin.hopdongtragop*']) ? 'show' : '' }}"
+            aria-labelledby="headingHopdongtragop" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::routeIs('admin.hopdongtragop') ? 'active' : '' }}"
+                    href="{{ route('admin.hopdongtragop') }}">
+                    Danh sách hợp dồng
+                </a>
+              
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item {{ Request::routeIs(['admin.binhluan*']) ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#binhluan" aria-expanded="true"
+            aria-controls="binhluan">
+            <span>Đánh giá</span>
+        </a>
+        <div id="binhluan" class="collapse {{ Request::routeIs(['admin.binhluan*']) ? 'show' : '' }}"
+            aria-labelledby="headingbinhluan" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ Request::routeIs('admin.binhluan') ? 'active' : '' }}"
+                    href="{{ route('admin.binhluan') }}">
+                    Danh sách đánh giá
+                </a>
+                
             </div>
         </div>
     </li>

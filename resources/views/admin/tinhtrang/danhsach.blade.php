@@ -1,8 +1,6 @@
 @extends('layouts.admin.app')
 @section('content')
-
     <div class="container-fluid">
-
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Tình trang đơn hàng</h1>
         <!-- DataTales Example -->
@@ -60,12 +58,13 @@
                                     <td>{{ $tt->tinhtrang }}</td>
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalSua{{ $tt->id }}"><i class="fa-light fa-edit"></i></a>
-                                    </td>   
-                                    <td class="text-center "><a href="{{ route('admin.loaisanpham.xoa', ['id' => $tt->id]) }}"
-                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $tt->tenloai }} không?')"><i
+                                    </td>
+                                    <td class="text-center "><a href="{{ route('admin.tinhtrang.xoa', ['id' => $tt->id]) }}"
+                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $tt->tinhtrang }} không?')"><i
                                                 class="fa-light fa-trash-alt text-danger"></i></a>
                                     </td>
                                 </tr>
+                                @include('admin.tinhtrang.sua')
                             @endforeach
 
                         </tbody>
@@ -76,7 +75,7 @@
 
     </div>
     <!-- cuối content: include modal partial -->
-    @include('admin.loaisanpham.them')
+    @include('admin.tinhtrang.them')
 
 @endsection
 

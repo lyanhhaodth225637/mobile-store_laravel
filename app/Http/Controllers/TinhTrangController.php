@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\TinhTrang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class TinhTrangController extends Controller
 {
-   public function getDanhSach()
+    public function getDanhSach()
     {
         $tinhtrang = TinhTrang::orderBy('tinhtrang', 'asc')->get();
         return view('admin.tinhtrang.danhsach', compact('tinhtrang'));
@@ -23,45 +25,43 @@ class TinhTrangController extends Controller
     public function postThem(Request $request)
     {
         $request->validate([
-            'tenloai' => ['required', 'string', 'max:255', 'unique:loaisanpham,tenloai'],
+            'tinhtrang' => ['required', 'string', 'max:255', 'unique:loaisanpham,tenloai'],
         ]);
 
-        $orm = new LoaiSanPham();
-        $orm->tenloai = Str::title($request->tenloai);
-        $orm->tenloai_slug = Str::slug($orm->tenloai, '-');
+        $orm = new TinhTrang();
+        $orm->tinhtrang = Str::title($request->tinhtrang);
         $orm->save();
 
-        return redirect()->route('admin.loaisanpham')->with('success', 'Thêm loại sản phẩm thành công!');
+        return redirect()->route('admin.tinhtrang')->with('success', 'Thêm tình trạng thành công!');
     }
 
     public function getSua($id)
     {
-        $loaisanpham = LoaiSanPham::findOrFail($id);
+        $tinhtrang = TinhTrang::findOrFail($id);
 
-        return view('admin.loaisanpham.sua', compact('loaisanpham'));
+        return view('admin.tinhtrang.sua', compact('tinhtrang'));
     }
 
     public function postSua(Request $request, $id)
     {
         $request->validate([
-            'tenloai' => ['required', 'string', 'max:255', Rule::unique('loaisanpham', 'tenloai')->ignore($id)],
+            'tinhtrang' => ['required', 'string', 'max:255', Rule::unique('tinhtrang', 'tinhtrang')->ignore($id)],
         ]);
 
-        $orm = LoaiSanPham::findOrFail($id);
-        $orm->tenloai = Str::title($request->tenloai);
-        $orm->tenloai_slug = Str::slug($orm->tenloai, '-');
+        $orm = TinhTrang::findOrFail($id);
+        $orm->tinhtrang = Str::title($request->tinhtrang);
         $orm->save();
 
-        return redirect()->route('admin.loaisanpham')->with('success', 'Cập nhật loại sản phẩm thành công!');
+        return redirect()->route('admin.tinhtrang')->with('success', 'Cập nhật tinh trang đơn hàng  thành công!');
     }
 
     public function getXoa($id)
     {
-        $orm = LoaiSanPham::find($id);
+        $orm = TinhTrang::find($id);
         if ($orm) {
             $orm->delete();
-            return redirect()->route('admin.loaisanpham')->with('success', 'Xóa thành công');
+            return redirect()->route('admin.tinhtrang')->with('success', 'Xóa thành công');
         }
-        return redirect()->route('admin.loaisanpham')->with('error', 'Lỗi khi xóa');
+        return redirect()->route('admin.tinhtrang')->with('error', 'Lỗi khi xóa');
     }
 }

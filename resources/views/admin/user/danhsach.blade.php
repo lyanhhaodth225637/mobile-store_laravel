@@ -24,9 +24,8 @@
                         <!-- Form lọc và nút thêm -->
                         <div class="d-flex align-items-center gap-2">
                             <form action="{{ route('admin.user.loc') }}" method="GET"
-                            
                                 class="d-flex align-items-center gap-2 m-0">
-                                
+
                                 <select name="vaitro" class="form-select" style="width: 180px;">
                                     <option value="">Vai trò</option>
                                     <option value="0" {{ request('vaitro') == '0' ? 'selected' : '' }}>Quản trị</option>
@@ -36,8 +35,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa-solid fa-filter"></i>
                                 </button>
-                                <a href="{{ route('admin.user.loc') }}"
-                                    class="btn btn-secondary">  
+                                <a href="{{ route('admin.user.loc') }}" class="btn btn-secondary">
                                     <i class="fa-solid fa-rotate-right"></i>
                                 </a>
                             </form>
@@ -106,12 +104,13 @@
                                         @if($user->role == 0)
                                             <span class="badge bg-danger p-1">Quản trị</span>
                                         @elseif($user->role == 1)
-                                            <span class="badge bg-warning p-1">Nhân viên</span>
+                                            <span class="badge bg-success p-1">Khách hàng</span>
                                         @elseif($user->role == 2)
                                             <span class="badge bg-success p-1">Khách hàng</span>
                                         @endif
                                     </td>
-                                    <td>{{ $user->points }}</td>
+                                   <td>{{ number_format($user->points, 0, ',', '.') }}</td>
+
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalSua{{ $user->id }}"><i class="fa-light fa-edit"></i></a>
                                     </td>
@@ -121,8 +120,8 @@
                                                 class="fa-light fa-trash-alt text-danger"></i></a>
                                     </td>
                                 </tr>
-                                @include('admin.user.sua');
-                                @include('admin.user.chitiet');
+                                @include('admin.user.sua')
+                                @include('admin.user.chitiet')
 
                             @endforeach
 
@@ -134,7 +133,7 @@
 
     </div>
     <!-- cuối content: include modal partial -->
-    @include('admin.user.them');
+    @include('admin.user.them')
 @endsection
 
 @section('js')

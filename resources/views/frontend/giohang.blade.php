@@ -39,55 +39,74 @@
                             </thead>
                             <tbody class="align-middle">
                                 <!-- Item -->
-                                <tr>
-                                    <td class="py-3 ps-0">
-                                        <div class="d-flex align-items-center">
-                                            <a class="flex-shrink-0" href="#">
-                                                <img src="assets/img/shop/08.png" width="110" alt="iPhone 14" />
-                                            </a>
-                                            <div class="w-100 min-w-0 ps-2 ps-xl-3">
-                                                <h5 class="d-flex animate-underline mb-2">
-                                                    <a class="d-block fs-sm fw-medium text-truncate animate-target"
-                                                        href="#">Apple iPhone 14 128GB</a>
-                                                </h5>
-                                                <ul class="list-unstyled gap-1 fs-xs mb-0">
-                                                    <li class="d-xl-none">
-                                                        <span class="text-body-secondary">Đơn giá:</span>
-                                                        <span class="text-dark-emphasis fw-medium">$899.00</span>
-                                                    </li>
-                                                </ul>
-                                                <div class="count-input rounded-2 d-md-none mt-3">
-                                                    <button type="button" class="btn btn-sm btn-icon" data-decrement>
-                                                        <i class="ci-minus"></i>
-                                                    </button>
-                                                    <input type="number" class="form-control form-control-sm" id="qty"
-                                                        name="qty" min="1" value="1" readonly />
-                                                    <button type="button" class="btn btn-sm btn-icon" data-increment>
-                                                        <i class="ci-plus"></i>
-                                                    </button>
+                                @foreach (Cart::content() as $cartsp)
+                                    <tr>
+                                        <td class="py-3 ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <a class="flex-shrink-0" href="#">
+                                                    <img src="{{ asset('storage/' . $cartsp->options->hinhanh) }}"
+                                                        alt="Thumbnail" width="70" />
+                                                </a>
+                                                <div class="w-100 min-w-0 ps-2 ps-xl-3">
+                                                    <h5 class="d-flex animate-underline mb-2">
+                                                        <a class="d-block fs-sm fw-medium text-truncate animate-target"
+                                                            href="#">{{ $cartsp->name }}</a>
+                                                    </h5>
+                                                    <ul class="list-unstyled gap-1 fs-xs mb-0">
+                                                        <li class="d-xl-none">
+                                                            <span class="text-body-secondary">Đơn giá:</span>
+                                                            <span class="text-dark-emphasis fw-medium"></span>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="count-input rounded-2 d-md-none mt-3">
+                                                        <button type="button" class="btn btn-sm btn-icon" data-decrement>
+                                                            <i class="ci-minus"></i>
+                                                        </button>
+                                                        <input type="number" class="form-control form-control-sm" id="qty"
+                                                            name="qty" min="1" value="1" readonly />
+                                                        <button type="button" class="btn btn-sm btn-icon" data-increment>
+                                                            <i class="ci-plus"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-xl-table-cell">$899.00</td>
-                                    <td class="py-3 d-none d-md-table-cell">
-                                        <div class="count-input">
-                                            <button type="button" class="btn btn-icon" data-decrement>
-                                                <i class="ci-minus"></i>
-                                            </button>
-                                            <input type="number" class="form-control" id="qty" name="qty" min="1" value="1"
-                                                readonly />
-                                            <button type="button" class="btn btn-icon" data-increment>
-                                                <i class="ci-plus"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="h6 py-3 d-none d-md-table-cell">$899.00</td>
-                                    <td class="text-end py-3 px-0">
-                                        <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip"
-                                            data-bs-custom-class="tooltip-sm" data-bs-title="Xóa khỏi giỏ"></button>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td class="h6 py-3 d-none d-xl-table-cell">
+                                            {{ number_format($cartsp->price, 0, ',', '.') }}<small> VNĐ</small>
+                                        </td>
+                                        <td class="py-3 d-none d-md-table-cell">
+                                            <div class="count-input">
+                                                <form action="{{ route('frontend.giohang.giam', $cartsp->rowId) }}"
+                                                    method="GET">
+                                                    @csrf
+                                                    <button class="btn btn-icon">
+                                                        <i class="ci-minus"></i>
+                                                    </button>
+                                                </form>
+
+                                                <input type="number" class="form-control" value="{{ $cartsp->qty }}" readonly />
+
+                                                <form action="{{ route('frontend.giohang.tang', $cartsp->rowId) }}"
+                                                    method="GET">
+                                                    @csrf
+                                                    <button class="btn btn-icon">
+                                                        <i class="ci-plus"></i>
+                                                    </button>
+                                                </form>
+
+
+                                            </div>
+                                        </td>
+                                        <td class="h6 py-3 d-none d-md-table-cell">
+                                            {{ number_format($cartsp->price * $cartsp->qty, 0, ',', '.') }}<small> VNĐ</small>
+                                        </td>
+                                        <td class="text-end py-3 px-0">
+                                            <button type="button" class="btn-close fs-sm" data-bs-toggle="tooltip"
+                                                data-bs-custom-class="tooltip-sm" data-bs-title="Xóa khỏi giỏ"></button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
                             </tbody>
                         </table>
                         <div class="nav position-relative z-2 mb-4 mb-lg-0">
@@ -100,39 +119,65 @@
                 </div>
 
                 <!-- Order summary (sticky sidebar) -->
+                @php
+                    $tongSoLuong = Cart::content()->sum('qty');
+                @endphp
+
                 <aside class="col-lg-4" style="margin-top:-100px">
                     <div class="position-sticky top-0" style="padding-top:100px">
                         <div class="bg-body-tertiary rounded-5 p-4 mb-3">
                             <div class="p-sm-2 p-lg-0 p-xl-2">
+
                                 <h5 class="border-bottom pb-4 mb-4">Tóm tắt đơn hàng</h5>
+
                                 <ul class="list-unstyled fs-sm gap-3 mb-0">
                                     <li class="d-flex justify-content-between">
-                                        Tổng tiền (3 sản phẩm):
-                                        <span class="text-dark-emphasis fw-medium">$2,427.00</span>
+                                        Tổng tiền ({{ $tongSoLuong }} sản phẩm):
+                                        <span class="text-dark-emphasis fw-medium">
+                                            {{ Cart::subtotal(0, ',', '.') }} VNĐ
+                                        </span>
                                     </li>
+
                                     <li class="d-flex justify-content-between">
                                         Giảm giá:
-                                        <span class="text-danger fw-medium">-$110.00</span>
+                                        <span class="text-danger fw-medium">
+                                            0 VNĐ
+                                        </span>
                                     </li>
-                                    <li class="d-flex justify-content-between">
-                                        Thuế VAT:
-                                        <span class="text-dark-emphasis fw-medium">$73.40</span>
+
+                                    <li class="d-flex justify-content-between"> 
+                                        VAT (10%):
+                                        <span class="text-dark-emphasis fw-medium">
+                                            {{ Cart::tax(0, ',', '.') }} VNĐ
+                                        </span>
                                     </li>
+
                                     <li class="d-flex justify-content-between">
                                         Phí vận chuyển:
-                                        <span class="text-dark-emphasis fw-medium">Tính toán khi thanh toán</span>
+                                        <span class="text-dark-emphasis fw-medium">
+                                            Tính khi thanh toán
+                                        </span>
                                     </li>
                                 </ul>
+
                                 <div class="border-top pt-4 mt-4">
                                     <div class="d-flex justify-content-between mb-3">
                                         <span class="fs-sm">Tổng ước tính:</span>
-                                        <span class="h5 mb-0">$2,390.40</span>
+                                        <span class="h5 mb-0">
+                                            {{ Cart::total(0, ',', '.') }} VNĐ
+                                        </span>
                                     </div>
+
                                     <a class="btn btn-lg btn-primary w-100" href="{{ route('user.dathang') }}">
                                         Tiến hành thanh toán
                                         <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
                                     </a>
+                                    <a class="btn btn-lg btn-info w-100 mt-2" href="{{ route('user.hopdong.tragop') }}">
+                                        Trả góp
+                                        <i class="ci-chevron-right fs-lg ms-1 me-n1"></i>
+                                    </a>
                                 </div>
+
                             </div>
                         </div>
                     </div>

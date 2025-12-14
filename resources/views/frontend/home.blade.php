@@ -56,7 +56,7 @@
                                         <div class="swiper-slide d-flex justify-content-end">
                                             <div class="ratio rtl-flip"
                                                 style="max-width:495px; --cz-aspect-ratio:calc(537 / 495 * 100%)">
-                                                <img src="{{ asset('assets/img/slider/02.png') }}" alt="Image" />
+                                                <img src="{{ asset('assets/img/slider/04.jpg') }}" alt="Image" />
                                             </div>
                                         </div>
                                         <div class="swiper-slide d-flex justify-content-end">
@@ -85,55 +85,16 @@
         <!-- Brands -->
         <section class="container mb-2">
             <div class="overflow-auto" data-simplebar data-simplebar-auto-hide="false">
-                <div class="row row-cols-6 g-0" style="min-width:960px">
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/apple-light-mode.svg') }}" class="d-none-dark"
-                                alt="Apple" />
-                            <img src="{{ asset('assets/img/brands/apple-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Apple" />
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/motorola-light-mode.svg') }}" class="d-none-dark"
-                                alt="Motorola" />
-                            <img src="{{ asset('assets/img/brands/motorola-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Motorola" />
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/xiaomi-light-mode.svg') }}" class="d-none-dark"
-                                alt="Xiaomi" />
-                            <img src="{{ asset('assets/img/brands/xiaomi-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Xiaomi" />
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/canon-light-mode.svg') }}" class="d-none-dark"
-                                alt="Canon" />
-                            <img src="{{ asset('assets/img/brands/canon-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Canon" />
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/samsung-light-mode.svg') }}" class="d-none-dark"
-                                alt="Samsung" />
-                            <img src="{{ asset('assets/img/brands/samsung-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Samsung" />
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a class="d-flex justify-content-center py-3 px-2 px-xl-3" href="#">
-                            <img src="{{ asset('assets/img/brands/sony-light-mode.svg') }}" class="d-none-dark"
-                                alt="Sony" />
-                            <img src="{{ asset('assets/img/brands/sony-dark-mode.svg') }}" class="d-none d-block-dark"
-                                alt="Sony" />
-                        </a>
-                    </div>
+                <div class="d-flex flex-nowrap gap-3" style="min-width: max-content;">
+                    @foreach ($hangsanxuat as $hsx)
+                        <div class="flex-shrink-0">
+                            <a class="d-flex justify-content-center align-items-center p-3 border rounded" href="#"
+                                style="width: 150px; height: 100px;">
+                                <img src="{{ asset('storage/' . $hsx->hinhanh) }}" class="d-none-dark" alt="{{ $hsx->tenhang }}"
+                                    style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </section>
@@ -155,100 +116,138 @@
                 <!-- Product grid -->
 
                 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 pt-4">
-                    <!-- Item -->
                     @foreach ($lsp->SanPham as $sp)
-                            <div class="col">
-                                <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
-                                    <div class="position-relative">
-                                        <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
-                                            <div class="d-flex flex-column gap-2">
-                                                <button type="button"
-                                                    class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex">
-                                                    <i class="ci-heart fs-base animate-target"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex">
-                                                    <i class="ci-refresh-cw fs-base animate-target"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
-                                            <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
-                                                data-bs-toggle="dropdown">
-                                                <i class="ci-more-vertical fs-lg"></i>
+                        <div class="col">
+                            <div class="product-card animate-underline hover-effect-opacity bg-body rounded">
+                                <div class="position-relative">
+                                    <!-- Action buttons for desktop -->
+                                    <div class="position-absolute top-0 end-0 z-2 hover-effect-target opacity-0 mt-3 me-3">
+                                        <div class="d-flex flex-column gap-2">
+                                            <button type="button"
+                                                class="btn btn-icon btn-secondary animate-pulse d-none d-lg-inline-flex"
+                                                aria-label="Thêm vào yêu thích">
+                                                <i class="ci-heart fs-base animate-target"></i>
                                             </button>
-                                            <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
-                                                <li>
-                                                    <a class="dropdown-item" href="#"><i class="ci-heart fs-sm ms-n1 me-2"></i> Thêm vào
-                                                        yêu thích</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="#"><i class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So
-                                                        sánh</a>
-                                                </li>
-                                            </ul>
+                                            <button type="button"
+                                                class="btn btn-icon btn-secondary animate-rotate d-none d-lg-inline-flex"
+                                                aria-label="So sánh">
+                                                <i class="ci-refresh-cw fs-base animate-target"></i>
+                                            </button>
                                         </div>
-                                        <a class="d-block rounded-top overflow-hidden p-3 p-sm-4" href="{{ route('frontend.sanpham.chitiet', [
-                            'tenloai_slug' => $sp->loaisanpham->tenloai_slug,
-                            'tensanpham_slug' => $sp->tensanpham_slug
-                        ]) }}">
-                                            @if($sp->khuyenmai > 0)
-                                                <span
-                                                    class="badge bg-info position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3 z-3">New</span>
-                                                <Span class="badge bg-danger position-absolute top-3 start-0 mt-5 ms-2 mt-lg-3 ms-lg-3 z-3">
-                                                    -{{ $sp->khuyenmai }}%</Span>
-                                            @else
-                                                <span
-                                                    class="badge bg-info position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3 z-3">New</span>
-                                            @endif
-
-                                            <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
-                                                <img src="{{ asset('storage/' . $sp->hinhanh) }}" />
-                                            </div>
-                                        </a>
                                     </div>
-                                    <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
-                                        <div class="d-flex align-items-center gap-2 mb-2">
-                                            <div class="d-flex gap-1 fs-xs">
-                                                <i class="ci-star-filled text-warning"></i>
-                                                <i class="ci-star-filled text-warning"></i>
-                                                <i class="ci-star-filled text-warning"></i>
-                                                <i class="ci-star-filled text-warning"></i>
-                                                <i class="ci-star text-body-tertiary opacity-75"></i>
-                                            </div>
-                                            <span class="text-body-tertiary fs-xs">(123)</span>
+
+                                    <!-- Dropdown for mobile -->
+                                    <div class="dropdown d-lg-none position-absolute top-0 end-0 z-2 mt-2 me-2">
+                                        <button type="button" class="btn btn-icon btn-sm btn-secondary bg-body"
+                                            data-bs-toggle="dropdown" aria-label="Tùy chọn">
+                                            <i class="ci-more-vertical fs-lg"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end fs-xs p-2" style="min-width:auto">
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <i class="ci-heart fs-sm ms-n1 me-2"></i> Thêm vào yêu thích
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#!">
+                                                    <i class="ci-refresh-cw fs-sm ms-n1 me-2"></i> So sánh
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Product image -->
+                                    <a class="d-block rounded-top overflow-hidden p-3 p-sm-4"
+                                        href="{{ route('frontend.sanpham.chitiet', ['tenloai_slug' => $sp->loaisanpham->tenloai_slug, 'tensanpham_slug' => $sp->tensanpham_slug]) }}">
+                                        <!-- Badges -->
+                                        @if($sp->khuyenmai > 0)
+                                            <span
+                                                class="badge bg-info position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3 z-3">New</span>
+                                            <span
+                                                class="badge bg-danger position-absolute top-0 start-0 mt-5 ms-2 mt-lg-5 ms-lg-3 z-3">-{{ $sp->khuyenmai }}%</span>
+                                        @else
+                                            <span
+                                                class="badge bg-info position-absolute top-0 start-0 mt-2 ms-2 mt-lg-3 ms-lg-3 z-3">New</span>
+                                        @endif
+
+                                        <div class="ratio" style="--cz-aspect-ratio:calc(240 / 258 * 100%)">
+                                            <img src="{{ asset('storage/' . $sp->hinhanh) }}" alt="{{ $sp->tensanpham }}"
+                                                loading="lazy" />
                                         </div>
-                                        <h3 class="pb-1 mb-2">
-                                            <a class="d-block fs-sm fw-medium text-truncate" href="{{ route('frontend.sanpham.chitiet', [
-                            'tenloai_slug' => $sp->loaisanpham->tenloai_slug,
-                            'tensanpham_slug' => $sp->tensanpham_slug
-                        ]) }}">
-                                                <span class="animate-target">{{ $sp->tensanpham }}</span>
-                                            </a>
-                                        </h3>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            @if ($sp->khuyenmai > 0)
-                                                <div class="h5 lh-1 mb-0">{{ number_format($sp->gia_khuyenmai, 0, ',', '.') }} <del
-                                                        class="text-body-tertiary fs-sm fw-normal">{{ number_format($sp->gia, 0, ',', '.') }}</del>
-                                                </div>
-                                            @else
-                                                <div class="h5 lh-1 mb-0">{{ number_format($sp->gia, 0, ',', '.') }} </div>
+                                    </a>
+                                </div>
+
+                                <!-- Product info -->
+                                <div class="w-100 min-w-0 px-1 pb-2 px-sm-3 pb-sm-3">
+                                    <!-- Rating -->
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <div class="d-flex gap-1 fs-xs">
+                                            @php
+                                                $fullStar = floor($sp->trungBinhSao);
+                                                $hasHalf = ($sp->trungBinhSao - $fullStar) >= 0.5;
+                                            @endphp
+
+                                            {{-- Sao đầy --}}
+                                            @for ($i = 1; $i <= $fullStar; $i++)
+                                                <i class="ci-star-filled text-warning"></i>
+                                            @endfor
+
+                                            {{-- Sao nửa --}}
+                                            @if ($hasHalf)
+                                                <i class="ci-star-half text-warning"></i>
                                             @endif
 
-                                            <form action="{{ route('frontend.giohang.them') }}" method="POST" class="add-to-cart-form">
-                                                @csrf
-                                                <input type="hidden" name="tensanpham_slug" value="{{ $sp->tensanpham_slug }}">
-
-                                                <button type="submit"
-                                                    class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2 position-relative">
-                                                    <i class="ci-shopping-cart fs-base"></i>
-                                                    
-                                                </button>
-                                            </form>
+                                            {{-- Sao rỗng --}}
+                                            @for ($i = $fullStar + $hasHalf + 1; $i <= 5; $i++)
+                                                <i class="ci-star text-body-tertiary opacity-75"></i>
+                                            @endfor
                                         </div>
+
+                                        <span class="text-body-tertiary fs-xs">
+                                            ({{ $sp->soBinhLuan }})
+                                        </span>
+                                    </div>
+
+                                    <!-- Product name -->
+                                    <h3 class="pb-1 mb-2">
+                                        <a class="d-block fs-sm fw-medium text-truncate"
+                                            href="{{ route('frontend.sanpham.chitiet', ['tenloai_slug' => $sp->loaisanpham->tenloai_slug, 'tensanpham_slug' => $sp->tensanpham_slug]) }}">
+                                            <span class="animate-target">{{ $sp->tensanpham }}</span>
+                                        </a>
+                                    </h3>
+
+                                    <!-- Price & Add to cart -->
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        @if ($sp->khuyenmai > 0)
+                                            <div class="h5 lh-1 mb-0">
+                                                {{ number_format($sp->gia_khuyenmai, 0, ',', '.') }}₫
+                                                <del
+                                                    class="text-body-tertiary fs-sm fw-normal">{{ number_format($sp->gia, 0, ',', '.') }}₫</del>
+                                            </div>
+                                        @else
+                                            <div class="h5 lh-1 mb-0">{{ number_format($sp->gia, 0, ',', '.') }}₫</div>
+                                        @endif
+
+                                        <form action="{{ route('frontend.giohang.them') }}" method="POST" class="add-to-cart-form">
+                                            @csrf
+                                            <input type="hidden" name="tensanpham_slug" value="{{ $sp->tensanpham_slug }}">
+
+                                            @if($sp->trangthai == 1)
+                                                <button type="submit"
+                                                    class="product-card-button btn btn-icon btn-secondary animate-slide-end ms-2"
+                                                    aria-label="Thêm vào giỏ hàng">
+                                                    <i class="ci-shopping-cart fs-base"></i>
+                                                </button>
+                                            @elseif($sp->trangthai == 0)
+                                                <span class="badge bg-secondary">Ngưng bán</span>
+                                            @elseif($sp->trangthai == 2)
+                                                <span class="badge bg-warning text-dark">Đặt trước</span>
+                                            @endif
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     @endforeach
                 </div>
             </section>
@@ -256,18 +255,15 @@
     </main>
 @endsection
 
-{{-- Thay toàn bộ đoạn cũ của bạn bằng đoạn này --}}
 @section('javascript')
     <script>
-
         document.addEventListener('DOMContentLoaded', function () {
+            // Xử lý sự kiện thêm vào giỏ hàng
             document.querySelectorAll('.add-to-cart-form').forEach(form => {
                 form.addEventListener('submit', function (e) {
-                    e.preventDefault();
+                    e.preventDefault(); // Chặn load lại trang
 
-                    const button = this.querySelector('button');
-                    const badge = button.querySelector('.added-notice');
-
+                    // Gửi Ajax
                     fetch(this.action, {
                         method: 'POST',
                         headers: {
@@ -279,22 +275,18 @@
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                // Cập nhật số lượng giỏ hàng ở header/offcanvas
+                                // 1. Cập nhật số lượng trên icon giỏ hàng
                                 document.querySelectorAll('.cart-count').forEach(el => {
                                     el.textContent = data.count;
                                 });
 
-                                // Hiệu ứng tick xanh
-                                badge.classList.remove('d-none');
-                                setTimeout(() => badge.classList.add('d-none'), 2000);
-
-                                // Nếu offcanvas đang mở → reload để cập nhật (hoặc nâng cao hơn là AJAX load)
+                                // 2. Nếu Offcanvas giỏ hàng đang mở thì reload lại nội dung
                                 const offcanvas = document.getElementById('shoppingCart');
                                 if (offcanvas && offcanvas.classList.contains('show')) {
                                     location.reload();
                                 }
 
-                                // Toast thông báo đẹp như Shopee
+                                // 3. Hiển thị thông báo thành công (Toast)
                                 showToast(data.message);
                             }
                         })
@@ -303,26 +295,30 @@
             });
         });
 
-        // Hàm toast chuẩn Bootstrap 5 – đẹp lung linh
+        // Hàm hiển thị Toast chuẩn, tự đóng sau 3s
         function showToast(message) {
             const toastHTML = `
-                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
-                    <div class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert">
-                        <div class="d-flex">
-                            <div class="toast-body fw-medium">
-                                ${message}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                        </div>
-                    </div>
-                </div>`;
+                                                                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+                                                                    <div class="toast align-items-center text-white bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                                                                        <div class="d-flex">
+                                                                            <div class="toast-body fw-medium">
+                                                                                <i class="ci-check-circle me-2"></i> ${message}
+                                                                            </div>
+                                                                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>`;
 
             const wrapper = document.createElement('div');
             wrapper.innerHTML = toastHTML;
             document.body.appendChild(wrapper);
 
             const toastEl = wrapper.querySelector('.toast');
-            const bsToast = new bootstrap.Toast(toastEl, { delay: 3000 });
+            const bsToast = new bootstrap.Toast(toastEl, {
+                delay: 3000,
+                autohide: true
+            });
+
             bsToast.show();
 
             toastEl.addEventListener('hidden.bs.toast', () => wrapper.remove());

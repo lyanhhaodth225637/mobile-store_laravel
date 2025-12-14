@@ -1,14 +1,18 @@
 <?php
 
+use App\Http\Controllers\BinhLuanController;
 use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\HangSanXuatController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HopDongTraGopController;
+use App\Http\Controllers\MSPayController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
 use App\Http\Controllers\QuanTriVienController;
 use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\TinhTrangController;
 use App\Http\Controllers\UserController;
+use App\Models\HopDongTraGop;
 use Illuminate\Support\Facades\Route;
 
 
@@ -22,9 +26,12 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'gethome'])->name('home');
 
+Route::get('/login/google', [HomeController::class, 'getGoogleLogin'])->name('google.login');
+Route::get('/login/google/callback', [HomeController::class, 'getGoogleCallback'])->name('google.callback');
+
 
 //ADMIN
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('role:admin')->group(function () {
     // Trang chủ của giao diện quản trị
     Route::get('/', [QuanTriVienController::class, 'getHome'])->name('home');
     Route::get('/home', [QuanTriVienController::class, 'getHome'])->name('home');
@@ -49,6 +56,13 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     //tình trạng
     Route::get('/tinhtrang', [TinhTrangController::class, 'getDanhSach'])->name('tinhtrang');
+    Route::get('/tinhtrang/xoa/{id}', [TinhTrangController::class, 'getXoa'])->name('tinhtrang.xoa');
+    Route::get('/tinhtrang/them', [TinhTrangController::class, 'getThem'])->name('tinhtrang.them');
+    Route::post('/tinhtrang/them', [TinhTrangController::class, 'postThem'])->name('tinhtrang.them');
+
+    Route::get('/tinhtrang/sua/{id}', [TinhTrangController::class, 'getSua'])->name('tinhtrang.sua');
+    Route::post('/tinhtrang/sua/{id}', [TinhTrangController::class, 'postSua'])->name('tinhtrang.sua');
+
 
     //sản phẩm
     Route::get('/sanpham', [SanPhamController::class, 'getDanhSach'])->name('sanpham');
@@ -81,6 +95,15 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/donhang/chitiet/{id}', [DonHangController::class, 'getDonHang_ChiTiet'])->name('donhang.chitiet');
 
 
+    //Hợp đồng trả góp
+    Route::get('/hopdongtragop', [HopDongTraGopController::class, 'getDanhSach'])->name('hopdongtragop');
+    Route::post('/hopdongtragop/{id}/duyet', [HopDongTraGopController::class, 'postDuyet'])->name('hopdongtragop.duyet');
+    Route::get('/hopdongtragop/loc', [HopDongTraGopController::class, 'getLoc'])->name('hopdongtragop.loc');
+
+
+    Route::get('/binhluan', [BinhLuanController::class, 'getDSBinhLuan'])->name('binhluan');
+    Route::get('/binhluan/loc', [BinhLuanController::class, 'getLoc'])->name('binhluan.loc');
+
 
 });
 
@@ -89,7 +112,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 Route::get('/user/dang-ky', [HomeController::class, 'getDangKy'])->name('user.dangky');
 Route::get('/user/dang-nhap', [HomeController::class, 'getDangNhap'])->name('user.dangnhap');
 // Trang tài khoản khách hàng
-Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
+Route::prefix('user')->name('user.')->middleware('role:user')->group(function () {
     // Trang chủ của giao diện khách hàng
     Route::get('/', [KhachHangController::class, 'getHome'])->name('home');
     Route::get('/home', [KhachHangController::class, 'getHome'])->name('home');
@@ -98,6 +121,14 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     Route::get('/dat-hang', [KhachHangController::class, 'getDatHang'])->name('dathang');
     Route::post('/dat-hang', [KhachHangController::class, 'postDatHang'])->name('dathang');
     Route::get('/dat-hang-thanh-cong', [KhachHangController::class, 'getDatHangThanhCong'])->name('dathangthanhcong');
+
+    //bình luận đánh giá
+    // POST bình luận hoặc reply
+    Route::post('/binh-luan', [KhachHangController::class, 'postBinhLuan'])->name('binhluan');
+    // Lấy danh sách bình luận của sản phẩm bằng AJAX
+    Route::get('/sanpham/{id}/binh-luan', [KhachHangController::class, 'getDSBinhLuan'])->name('user.getDSBinhLuan');
+    // POST like/dislike bình luận
+    Route::post('/binh-luan/{id}/like', [BinhLuanController::class, 'like'])->name('binhluan.like');
 
     // Xem và cập nhật trạng thái đơn hàng
     Route::get('/don-hang', [KhachHangController::class, 'getDonHang'])->name('donhang');
@@ -115,6 +146,31 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function () {
     // Đăng xuất
     Route::post('/dang-xuat', [KhachHangController::class, 'postDangXuat'])->name('dangxuat');
     Route::post('/upload-avatar', [KhachHangController::class, 'uploadAvatar'])->name('upload.avatar');
+
+    //voucher 
+    Route::get('/voucher', [KhachHangController::class, 'getVoucher'])->name('voucher');
+    Route::post('/voucher', [KhachHangController::class, 'postVoucher'])->name('voucher');
+    Route::post('/apply-voucher', [KhachHangController::class, 'apply'])->name('apply-voucher');
+
+    //
+    Route::get('/mspay', [KhachHangController::class, 'getMSPay'])->name('mspay');
+
+    //trả góp
+    Route::get('/hop-dong/tra-gop', [KhachHangController::class, 'getHopDongTraGop'])->name('hopdong.tragop');
+    // Lưu hợp đồng trả góp
+    Route::post('/hop-dong/tra-gop/luu', [KhachHangController::class, 'postHopDongTraGop'])->name('hopdong.tragop.luu');
+
+    Route::get('/ho-so/tra-gop', [KhachHangController::class, 'getHoSoTraGop'])->name('hoso.tragop');
+
+    // ví MSPay
+    Route::get('/mspay', [KhachHangController::class, 'getMSPay'])->name('mspay');
+
+    Route::post('/mspay/dang-ky-pin', [MSPayController::class, 'postDk_MSPay_Pin'])->name('mspay.dk_pin');
+    Route::post('/mspay/nap-tien', [MSPayController::class, 'postNapTien_MSPay'])->name('mspay.naptien');
+
+    Route::post('/dat-hang/mspay', [MSPayController::class, 'postDatHangMSPay'])->name('dathang.mspay');
+
+
 });
 
 
@@ -128,6 +184,7 @@ Route::name('frontend.')->group(function () {
     // Trang sản phẩm
     Route::get('/san-pham', [HomeController::class, 'getSanPham'])->name('sanpham');
     Route::get('/san-pham/{tenloai_slug}', [HomeController::class, 'getSanPham'])->name('sanpham.phanloai');
+    Route::get('/san-pham/{tenloai_slug}/loc', [HomeController::class, 'getLoc'])->name('sanpham.loc');
     Route::get('/san-pham/{tenloai_slug}/{tensanpham_slug}', [HomeController::class, 'getSanPham_ChiTiet'])->name('sanpham.chitiet');
 
     // Tin tức
@@ -147,6 +204,14 @@ Route::name('frontend.')->group(function () {
 
     // Liên hệ
     Route::get('/lien-he', [HomeController::class, 'getLienHe'])->name('lienhe');
+
+    //trả góp
+    Route::get('/tra-gop', [HomeController::class, 'getTraGop'])->name('tragop');
+
+
+    Route::get('/timkiem', [HomeController::class, 'getTimkiem'])->name('timkiem');
+
+    Route::get('/timkiem/loc', [HomeController::class, 'getLocTK'])->name('timkiem.loc');
 });
 
 

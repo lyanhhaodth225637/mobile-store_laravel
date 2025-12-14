@@ -21,10 +21,11 @@ return new class extends Migration {
             $table->double('gia');
             $table->tinyInteger('khuyenmai')->default(0);
             $table->double('gia_khuyenmai')->nullable();
+            $table->integer('daban')->default(0);
             $table->tinyInteger('trangthai')->default(0);//0 hết, 1 đang bán, 2 đặt trước
             $table->integer('luotxem')->default(0);
             $table->boolean('noibat')->default(false);
-            $table->boolean('dat_truoc')->default(false);
+            $table->integer('sl_dat_truoc')->default(0);
             $table->timestamps();
         });
 
