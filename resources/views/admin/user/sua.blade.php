@@ -64,8 +64,8 @@
                         <label for="role" class="form-label">Quyền</label>
                         <select name="role" id="role" class="form-select @error('role') is-invalid @enderror" required>
                             <option value="0" {{ old('role', $user->role) == 0 ? 'selected' : '' }}>Admin</option>
-                            <option value="1" {{ old('role', $user->role) == 1 ? 'selected' : '' }}>Nhân viên</option>
-                            <option value="2" {{ old('role', $user->role) == 2 ? 'selected' : '' }}>Khách hàng</option>
+                            <option value="1" {{ old('role', $user->role) == 1 ? 'selected' : '' }}>khách hàng</option>
+                           
 
                         </select>
                         @error('role')

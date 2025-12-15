@@ -51,8 +51,8 @@
                                 <th>Địa chỉ</th>
                                 <th>Tình trạng</th>
                                 <th>Thành tiền (VAT 10%)</th>
-                                <th class="text-center">Sửa</th>
-                                <th class="text-center">Xóa</th>
+                                <!-- <th class="text-center">Sửa</th>
+                                <th class="text-center">Xóa</th> -->
                             </tr>
                         </thead>
 
@@ -70,13 +70,7 @@
                                     <td>{{ number_format($dh->tongtien, 0, ',', '.') }}</td>
 
 
-                                    <td class="text-center"><a href="#" data-bs-toggle="modal" data-bs-target="#modalSua"><i
-                                                class="fa-light fa-edit"></i></a>
-                                    </td>
-                                    <td class="text-center "><a href="{{ route('admin.loaisanpham.xoa', ['id' => $dh->id]) }}"
-                                            onclick="return confirm('Bạn có muốn xóa loại sản phẩm {{ $dh->tenloai }} không?')"><i
-                                                class="fa-light fa-trash-alt text-danger"></i></a>
-                                    </td>
+                                   
                                 </tr>
                                 @include('admin.donhang.chitiet')
                             @endforeach

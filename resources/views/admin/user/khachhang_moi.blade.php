@@ -57,9 +57,9 @@
                                     <td>
                                         @if($user->role == 0)
                                             <span class="badge bg-danger p-1">Quản trị</span>
-                                        @elseif($user->role == 1)
-                                            <span class="badge bg-warning p-1">Nhân viên</span>
                                         @elseif($user->role == 2)
+                                            <span class="badge bg-warning p-1">Nhân viên</span>
+                                        @elseif($user->role == 1)
                                             <span class="badge bg-success p-1">Khách hàng</span>
                                         @endif
                                     </td>

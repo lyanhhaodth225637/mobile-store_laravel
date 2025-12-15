@@ -11,11 +11,11 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <!-- Nút Import/Export -->
                     <div class="d-flex gap-2">
-                        <a class="btn bg-gradient-info text-white" href="#" data-bs-toggle="modal"
+                        <a hidden class="btn bg-gradient-info text-white" href="#" data-bs-toggle="modal"
                             data-bs-target="#modalImport">
                             <i class="fa-solid fa-upload"></i> Import
                         </a>
-                        <a class="btn bg-gradient-success text-white" href="{{ route('admin.sanpham.xuat') }}">
+                        <a hidden class="btn bg-gradient-success text-white" href="{{ route('admin.sanpham.xuat') }}">
                             <i class="fa-solid fa-download"></i> Export
                         </a>
                     </div>
@@ -109,7 +109,7 @@
                                             <span class="badge bg-success p-1">Khách hàng</span>
                                         @endif
                                     </td>
-                                   <td>{{ number_format($user->points, 0, ',', '.') }}</td>
+                                    <td>{{ number_format($user->points, 0, ',', '.') }}</td>
 
                                     <td class="text-center"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#modalSua{{ $user->id }}"><i class="fa-light fa-edit"></i></a>

@@ -184,10 +184,10 @@
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                     <i class="fas fa-times me-2"></i>Đóng
                 </button>
-                <button type="button" class="btn text-white"
+                <!-- <button type="button" class="btn text-white"
                     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                     <i class="fas fa-print me-2"></i>In hóa đơn
-                </button>
+                </button> -->
             </div>
         </div>
     </div>

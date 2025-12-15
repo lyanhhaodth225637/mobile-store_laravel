@@ -46,6 +46,7 @@
                         <thead>
                             <tr>
                                 <th width="5%">#</th>
+                                <th width="10%">Tên</th>
                                 <th width="10%">Hình ảnh</th>
                                 <th width="10%">Sản phẩm</th>
                                 <th width="15%">Nội dung</th>
@@ -60,6 +61,7 @@
                             @foreach ($binhluan as $bl)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $bl->user->name }}</td>
                                     <td class="text-center"><img src="{{ asset('storage/' . $bl->sanpham->hinhanh) }}"
                                             width="100" class="img-thumbnail" /></td>
                                     <td>{{ $bl->sanpham->tensanpham }}</td>
